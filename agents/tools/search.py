@@ -15,6 +15,7 @@ from helpers.utils import get_logger
 from agents.tools.terms import normalize_text_with_glossary
 
 logger = get_logger(__name__)
+_index_capabilities_cache: Dict[str, Dict[str, Any]] = {}
 
 
 def _marqo_search_sync(endpoint_url: str, index_name: str, search_params: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -22,6 +23,93 @@ def _marqo_search_sync(endpoint_url: str, index_name: str, search_params: Dict[s
     client = marqo.Client(url=endpoint_url)
     result = client.index(index_name).search(**search_params)
     return result.get("hits", [])
+
+
+def _get_index_capabilities_sync(endpoint_url: str, index_name: str) -> Dict[str, Any]:
+    """
+    Fetch and cache index capabilities once per endpoint/index pair.
+    Useful for startup-like compatibility checks across index schema changes.
+    """
+    cache_key = f"{endpoint_url}::{index_name}"
+    cached = _index_capabilities_cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    client = marqo.Client(url=endpoint_url)
+    try:
+        index_info = client.get_index(index_name)
+        tensor_fields = set(index_info.get("tensorFields", []) if isinstance(index_info, dict) else [])
+        all_fields = index_info.get("allFields", []) if isinstance(index_info, dict) else []
+        field_names = {f.get("name") for f in all_fields if isinstance(f, dict) and f.get("name")}
+        capabilities = {
+            "exists": True,
+            "tensor_fields": sorted(tensor_fields),
+            "has_text_tensor": "text" in tensor_fields,
+            "has_text_for_embedding_tensor": "text_for_embedding" in tensor_fields,
+            "has_is_reference_filter": "is_reference" in field_names,
+            "field_names": sorted(field_names),
+        }
+    except Exception as e:
+        capabilities = {
+            "exists": False,
+            "error": str(e),
+            "tensor_fields": [],
+            "has_text_tensor": False,
+            "has_text_for_embedding_tensor": False,
+            "has_is_reference_filter": False,
+            "field_names": [],
+        }
+
+    _index_capabilities_cache[cache_key] = capabilities
+    return capabilities
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    val = os.getenv(name)
+    if val is None:
+        return default
+    return val.strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
+def _prepare_query_for_e5(query: str) -> str:
+    cleaned = query.strip()
+    if cleaned.lower().startswith("query:"):
+        return cleaned
+    return f"query: {cleaned}"
+
+
+def _doc_key(hit: Dict[str, Any]) -> str:
+    return (
+        str(hit.get("doc_id") or "").strip()
+        or str(hit.get("filename") or "").strip()
+        or str(hit.get("name_en") or "").strip()
+        or str(hit.get("name") or "").strip()
+        or str(hit.get("_id") or "").strip()
+    )
+
+
+def _apply_doc_diversity(hits: List[Dict[str, Any]], top_k: int, max_per_doc: int) -> List[Dict[str, Any]]:
+    selected: List[Dict[str, Any]] = []
+    per_doc_counts: Dict[str, int] = {}
+
+    for hit in hits:
+        key = _doc_key(hit)
+        count = per_doc_counts.get(key, 0)
+        if count >= max_per_doc:
+            continue
+        per_doc_counts[key] = count + 1
+        selected.append(hit)
+        if len(selected) >= top_k:
+            break
+
+    if len(selected) < top_k:
+        for hit in hits:
+            if hit in selected:
+                continue
+            selected.append(hit)
+            if len(selected) >= top_k:
+                break
+    return selected
 
 DocumentType = Literal['video', 'document']
 
@@ -78,10 +166,29 @@ async def search_documents(
         if not index_name:
             raise ValueError("Marqo index name is required")
 
+        capabilities = await asyncio.to_thread(_get_index_capabilities_sync, endpoint_url, index_name)
+        if capabilities.get("exists"):
+            logger.info(
+                "Index capabilities: tensor_fields=%s, text_tensor=%s, text_for_embedding_tensor=%s, has_is_reference=%s",
+                capabilities.get("tensor_fields", []),
+                capabilities.get("has_text_tensor"),
+                capabilities.get("has_text_for_embedding_tensor"),
+                capabilities.get("has_is_reference_filter"),
+            )
+        else:
+            logger.warning("Could not inspect index '%s': %s", index_name, capabilities.get("error"))
+
         logger.info(f"Searching for '{query}' in index '{index_name}'")
+
+        use_e5_query_prefix = _env_bool("MARQO_USE_E5_QUERY_PREFIX", True)
+        exclude_reference_chunks = _env_bool("MARQO_EXCLUDE_REFERENCE", True)
+        max_per_doc = int(os.getenv("MARQO_MAX_CHUNKS_PER_DOC", "2"))
+        search_limit = min(max(top_k * 5, top_k), 100)
+        effective_query = _prepare_query_for_e5(query) if use_e5_query_prefix else query
+
         search_params = {
-            "q": query,
-            "limit": top_k,
+            "q": effective_query,
+            "limit": search_limit,
             "search_method": "hybrid",
             "hybrid_parameters": {
                 "retrievalMethod": "disjunction",
@@ -90,10 +197,13 @@ async def search_documents(
                 "rrfK": 60,
             },
         }
+        if exclude_reference_chunks and capabilities.get("has_is_reference_filter", False):
+            search_params["filter_string"] = "is_reference:false"
         # Marqo client is sync; run in thread pool to avoid blocking the event loop
         results = await asyncio.to_thread(
             _marqo_search_sync, endpoint_url, index_name, search_params
         )
+        results = _apply_doc_diversity(results, top_k=top_k, max_per_doc=max_per_doc)
 
         if len(results) == 0:
             return f"No results found for `{query}`"
@@ -103,7 +213,7 @@ async def search_documents(
             for hit in results:
                 # Map Marqo fields to our model
                 processed_hit = {
-                    "name": hit.get("name", ""),
+                    "name": hit.get("name") or hit.get("name_en") or hit.get("name_gu") or hit.get("filename", ""),
                     "text": hit.get("text", ""),
                     "doc_id": hit.get("doc_id", hit.get("_id", "")),
                     "type": hit.get("type", "document"),

@@ -89,7 +89,14 @@ def _format_translation_prompt(
         f"Produce only the {target_name} translation, without any additional explanations or commentary."
     )
     if mini_glossary and mini_glossary.strip():
-        instruction += f"\n\nSpecific Translations for Reference:\n{mini_glossary.strip()}\n"
+        lines = mini_glossary.strip().splitlines()
+        rules = []
+        for line in lines:
+            if " -> " in line:
+                en_term, gu_term = line.split(" -> ", 1)
+                rules.append(f"Rule: '{en_term.strip()}' must be translated as '{gu_term.strip()}'.")
+        if rules:
+            instruction += "\n\n**Terminology Rules (mandatory):**\n" + "\n".join(rules) + "\n"
     instruction += f"\n\nPlease translate the following {source_name} text into {target_name}:\n\n\n{text.strip()}"
 
     prompt = (

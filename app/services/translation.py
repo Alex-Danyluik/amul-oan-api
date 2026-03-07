@@ -2,7 +2,7 @@
 Translation service using TranslateGemma models.
 
 Provides translation between Indian languages and English using
-TranslateGemma model sizes (4B, 12B, 27B) deployed on vLLM.
+TranslateGemma 27B base model deployed on vLLM.
 """
 
 import os
@@ -112,7 +112,7 @@ TRANSLATION_ENDPOINTS = {
     "27b-base": os.getenv("TRANSLATEGEMMA_27B_BASE_ENDPOINT", "http://localhost:18002/v1"),
 }
 
-DEFAULT_TRANSLATION_MODEL = os.getenv("DEFAULT_TRANSLATION_MODEL", "4b")
+DEFAULT_TRANSLATION_MODEL = os.getenv("DEFAULT_TRANSLATION_MODEL", "27b-base")
 
 TRANSLATION_MODEL_IDS = {
     "4b": os.getenv("TRANSLATEGEMMA_4B_MODEL", "translategemma-4b"),
@@ -197,14 +197,10 @@ def _format_translation_prompt(
 
 def _resolve_model(model_size: Optional[str], target_lang: str) -> tuple[str, Optional[str], Optional[str]]:
     """
-    Pick the right model/endpoint based on translation direction.
-    For *→English use base model; for en→* use finetuned.
+    Resolve to 27b-base model/endpoint for all translations.
     Returns (model_size, endpoint, model_id).
     """
-    target_code = LANG_CODES.get(target_lang.lower(), target_lang.lower())
-    if target_code == "en" and model_size in ("27b", None):
-        model_size = "27b-base"
-    model_size = model_size or DEFAULT_TRANSLATION_MODEL
+    model_size = "27b-base"
     endpoint = TRANSLATION_ENDPOINTS.get(model_size)
     model_id = TRANSLATION_MODEL_IDS.get(model_size)
     return model_size, endpoint, model_id
@@ -214,7 +210,7 @@ async def translate_text(
     text: str,
     source_lang: str,
     target_lang: str,
-    model_size: Optional[Literal["4b", "12b", "27b"]] = None,
+    model_size: Optional[Literal["4b", "12b", "27b", "27b-base"]] = None,
     temperature: float = 0.0,
     max_tokens: int = 2048
 ) -> str:
@@ -271,7 +267,7 @@ async def translate_text_stream_fast(
     text: str,
     source_lang: str,
     target_lang: str,
-    model_size: Optional[Literal["4b", "12b", "27b"]] = None,
+    model_size: Optional[Literal["4b", "12b", "27b", "27b-base"]] = None,
     temperature: float = 0.0,
     max_tokens: int = 2048
 ):

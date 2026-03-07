@@ -7,6 +7,7 @@ TranslateGemma model sizes (4B, 12B, 27B) deployed on vLLM.
 
 import os
 import json
+import re
 import aiohttp
 from typing import Literal, Optional
 from helpers.utils import get_logger
@@ -18,9 +19,47 @@ load_dotenv()
 logger = get_logger(__name__)
 
 
+GU_PREFERRED_TRANSLATION_RULES = [
+    "Use farmer-preferred Gujarati livestock terms.",
+    "Prefer 'આઉ/બાવલું' over 'પાહો' for udder context.",
+    "Prefer 'ધાર' over 'ટીપાં' for milk streams.",
+    "Use 'ગાભણ' for pregnant livestock context.",
+    "Do not output editorial markers like 'red colour' or formatting instructions.",
+]
+
+
+GU_POST_REPLACEMENTS = [
+    (r"(?i)red\s*colour\s*-?\s*delete", ""),
+    (r"(?i)red\s*colour", ""),
+    (r"(?i)\bpaho\b", "આઉ/બાવલું"),
+    (r"ગર્ભવતી", "ગાભણ"),
+    (r"પાહો", "આઉ/બાવલું"),
+    (r"ટીપાં", "ધાર"),
+    (r"શિશુ\s*પશુ", "નાના બચ્ચા/વાછરડી"),
+    (r"\bટોળા\b", "ધણ"),
+    (r"સંતુલિત\s*પશુ\s*ચારો", "પશુદાણ"),
+    (r"ગર્ભાધાન", "બીજદાન"),
+    (r"ટિક્કી", "ઇતરડી"),
+    (r"સ્તનના\s*નિપલ્સ", "આંચળ"),
+    (r"સ્તન\s*પ્રદેશ", "આઉ/બાવલા ના ભાગ"),
+]
+
+
 def _fix_dandas(text: str) -> str:
     """Replace Devanagari dandas (।) with periods in TranslateGemma output."""
     return text.replace("।", ".")
+
+
+def _post_normalize_gu_translation(text: str, target_lang: str) -> str:
+    if target_lang.lower() not in ("gujarati", "gu"):
+        return text
+    out = text
+    for pat, repl in GU_POST_REPLACEMENTS:
+        out = re.sub(pat, repl, out)
+    # collapse extra spaces introduced by removals
+    out = re.sub(r"[ \t]{2,}", " ", out)
+    out = re.sub(r"\n{3,}", "\n\n", out)
+    return out.strip()
 
 
 TRANSLATION_ENDPOINTS = {
@@ -97,6 +136,12 @@ def _format_translation_prompt(
                 rules.append(f"Rule: '{en_term.strip()}' must be translated as '{gu_term.strip()}'.")
         if rules:
             instruction += "\n\n**Terminology Rules (mandatory):**\n" + "\n".join(rules) + "\n"
+    if target_code == "gu":
+        instruction += (
+            "\n\n**Gujarati Livestock Style Rules (mandatory):**\n- "
+            + "\n- ".join(GU_PREFERRED_TRANSLATION_RULES)
+            + "\n"
+        )
     instruction += f"\n\nPlease translate the following {source_name} text into {target_name}:\n\n\n{text.strip()}"
 
     prompt = (
@@ -144,7 +189,7 @@ async def translate_text(
 
     mini_glossary = ""
     if target_lang.lower() in ("gujarati", "gu"):
-        mini_glossary = get_mini_glossary_for_text(text, threshold=0.95)
+        mini_glossary = get_mini_glossary_for_text(text, threshold=0.90, max_terms=40)
         if mini_glossary:
             logger.info(f"Translation prompt: injected mini glossary ({len(mini_glossary.splitlines())} terms)")
     prompt = _format_translation_prompt(text, source_lang, target_lang, mini_glossary=mini_glossary)
@@ -170,6 +215,7 @@ async def translate_text(
                 result = await response.json()
                 translated_text = result["choices"][0]["text"].strip()
                 translated_text = _fix_dandas(translated_text)
+                translated_text = _post_normalize_gu_translation(translated_text, target_lang)
                 logger.info(f"Translation successful ({len(text)} -> {len(translated_text)} chars)")
                 return translated_text
 
@@ -200,7 +246,7 @@ async def translate_text_stream_fast(
 
     mini_glossary = ""
     if target_lang.lower() in ("gujarati", "gu"):
-        mini_glossary = get_mini_glossary_for_text(text, threshold=0.95)
+        mini_glossary = get_mini_glossary_for_text(text, threshold=0.90, max_terms=40)
         if mini_glossary:
             logger.info(f"Translation prompt: injected mini glossary ({len(mini_glossary.splitlines())} terms)")
     prompt = _format_translation_prompt(text, source_lang, target_lang, mini_glossary=mini_glossary)
@@ -238,7 +284,9 @@ async def translate_text_stream_fast(
                                 chunk_data = json.loads(data)
                                 content = chunk_data['choices'][0].get('text', '')
                                 if content:
-                                    yield _fix_dandas(content)
+                                    content = _fix_dandas(content)
+                                    content = _post_normalize_gu_translation(content, target_lang)
+                                    yield content
                             except json.JSONDecodeError:
                                 continue
 

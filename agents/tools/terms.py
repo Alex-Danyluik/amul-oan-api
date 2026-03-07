@@ -29,6 +29,7 @@ for pair in term_pairs:
         pair['gu'] = pair['mr']
     TERM_PAIRS.append(TermPair(**pair))
 
+
 async def search_terms(
     term: str, 
     max_results: int = 5,
@@ -161,7 +162,8 @@ def get_mini_glossary_for_text(
     if not text or not text.strip():
         return ""
     score_cutoff = int(threshold * 100) if 0 < threshold <= 1 else 95
-    words = text.split()
+    # Normalize phrase candidates so punctuation doesn't reduce fuzzy matches.
+    words = re.findall(r"[A-Za-z0-9\-/]+", text)
     if not words:
         return ""
     # Dedupe by canonical English term (lowercase key)

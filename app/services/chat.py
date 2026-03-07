@@ -97,6 +97,43 @@ def should_translate_batch(batch_text: str, word_count: int) -> bool:
     return False
 
 
+_ADMIN_INTENT_PATTERNS = [
+    r"\bprofile\b",
+    r"\bpassbook\b",
+    r"\bpayment\b",
+    r"\bsalary\b",
+    r"\bmobile number\b",
+    r"\bregistered animals?\b",
+    r"\bpd\b",
+    r"પ્રોફાઇલ",
+    r"પાસબુક",
+    r"પેમેન્ટ",
+    r"પગાર",
+    r"મોબાઇલ",
+    r"બાકી",
+    r"ટ્રેક નંબર",
+]
+_LANG_SWITCH_PATTERNS = [
+    r"\bswitch language\b",
+    r"\banswer in marathi\b",
+    r"\banswer in hindi\b",
+    r"ભાષા",
+    r"હિન્દી",
+    r"मराठी",
+    r"मराठीत",
+]
+
+
+def _looks_like_admin_or_language_intent(text: str) -> bool:
+    t = (text or "").lower()
+    if not t:
+        return False
+    for pat in _ADMIN_INTENT_PATTERNS + _LANG_SWITCH_PATTERNS:
+        if re.search(pat, t):
+            return True
+    return False
+
+
 logger = get_logger(__name__)
 GENERIC_UNAVAILABLE_MESSAGE_EN = (
     "I am unable to process your request right now. Please try again later."
@@ -245,6 +282,21 @@ async def stream_chat_messages(
             # moderation_event = create_moderation_event(...)
             # Generate suggestions after moderation passes
             if moderation_data.category == "valid_agricultural":
+                # Extra guard: do not allow admin/profile/language-switch requests
+                # to enter retrieval even if moderation was overly permissive.
+                if _looks_like_admin_or_language_intent(query):
+                    decline_text = await localize_system_text(
+                        "I can help with agricultural and livestock advice. "
+                        "For profile, payment, passbook, or language settings, please use the app support flow."
+                    )
+                    logger.info(
+                        "request_id=%s moderation_blocked=True reason=admin_or_language_intent response_preview=%s",
+                        request_id,
+                        decline_text[:160],
+                    )
+                    yield decline_text
+                    return
+
                 logger.info(f"Triggering suggestions generation for session {session_id}")
                 try:
                     background_tasks.add_task(create_suggestions, session_id, target_lang)

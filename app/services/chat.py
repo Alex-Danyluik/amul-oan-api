@@ -61,6 +61,22 @@ def extract_complete_sentences(text: str):
     return complete, incomplete
 
 
+def _batch_starts_new_line_or_list(text: str) -> bool:
+    """True if text starts with a newline or list marker (bullet/numbered), so we should preserve a line break before it when streaming."""
+    if not text or not text.strip():
+        return False
+    stripped = text.lstrip()
+    if text != stripped:
+        return True  # leading whitespace (e.g. newline) — lost when we split into sentence batches
+    if stripped.startswith(("-", "•")) and (len(stripped) == 1 or stripped[1:2].isspace() or stripped[1:2] == "."):
+        return True
+    if stripped.startswith("*") and (len(stripped) == 1 or stripped[1:2].isspace() or stripped[1:2] == "."):
+        return True
+    if re.match(r"^\d+\.\s", stripped):
+        return True
+    return False
+
+
 def should_translate_batch(batch_text: str, word_count: int) -> bool:
     # Tuned for low-latency streaming while keeping reasonable batch size
     MIN_WORDS = 15
@@ -386,6 +402,9 @@ async def stream_chat_messages(
 
                                             batch_text = "".join(translation_batch)
                                             if should_translate_batch(batch_text, batch_word_count):
+                                                if translated_output_chunks and _batch_starts_new_line_or_list(batch_text):
+                                                    translated_output_chunks.append("\n")
+                                                    yield "\n"
                                                 try:
                                                     logger.info(
                                                         f"Translation pipeline (Anthropic): "
@@ -415,6 +434,9 @@ async def stream_chat_messages(
                     # Flush remaining batches/fragments at end of stream
                     if translation_batch:
                         batch_text = "".join(translation_batch)
+                        if translated_output_chunks and _batch_starts_new_line_or_list(batch_text):
+                            translated_output_chunks.append("\n")
+                            yield "\n"
                         try:
                             logger.info(
                                 f"Translation pipeline (Anthropic): flushing final batch to {target_lang} "
@@ -436,6 +458,9 @@ async def stream_chat_messages(
                             yield batch_text
 
                     if sentence_buffer.strip():
+                        if translated_output_chunks and _batch_starts_new_line_or_list(sentence_buffer):
+                            translated_output_chunks.append("\n")
+                            yield "\n"
                         try:
                             logger.info(
                                 "Translation pipeline (Anthropic): flushing tail fragment "
@@ -503,6 +528,9 @@ async def stream_chat_messages(
 
                             batch_text = "".join(translation_batch)
                             if should_translate_batch(batch_text, batch_word_count):
+                                if translated_output_chunks and _batch_starts_new_line_or_list(batch_text):
+                                    translated_output_chunks.append("\n")
+                                    yield "\n"
                                 try:
                                     logger.info(
                                         f"Translation pipeline: streaming optimised batch to {target_lang} "
@@ -530,6 +558,9 @@ async def stream_chat_messages(
                     # Flush remaining batches/fragments at end of stream
                     if translation_batch:
                         batch_text = "".join(translation_batch)
+                        if translated_output_chunks and _batch_starts_new_line_or_list(batch_text):
+                            translated_output_chunks.append("\n")
+                            yield "\n"
                         try:
                             logger.info(
                                 f"Translation pipeline: flushing final batch to {target_lang} "
@@ -550,6 +581,9 @@ async def stream_chat_messages(
                             yield batch_text
 
                     if sentence_buffer.strip():
+                        if translated_output_chunks and _batch_starts_new_line_or_list(sentence_buffer):
+                            translated_output_chunks.append("\n")
+                            yield "\n"
                         try:
                             logger.info(
                                 f"Translation pipeline: flushing tail fragment to {target_lang}"

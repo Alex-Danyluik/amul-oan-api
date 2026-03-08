@@ -173,7 +173,8 @@ def _format_translation_prompt(
         f"You are a professional {source_name} ({source_code}) to {target_name} ({target_code}) translator. "
         f"Your goal is to accurately convey the meaning and nuances of the original {source_name} text "
         f"while adhering to {target_name} grammar, vocabulary, and cultural sensitivities.\n"
-        f"Produce only the {target_name} translation, without any additional explanations or commentary."
+        f"Produce only the {target_name} translation, without any additional explanations or commentary.\n"
+        f"Preserve newlines, paragraph breaks, and list structure (bullets, numbered items, markdown) exactly as in the source."
     )
     if mini_glossary and mini_glossary.strip():
         lines = mini_glossary.strip().splitlines()

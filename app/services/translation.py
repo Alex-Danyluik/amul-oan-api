@@ -93,7 +93,12 @@ def _fix_dandas(text: str) -> str:
     return text.replace("।", ".")
 
 
-def _post_normalize_gu_translation(text: str, target_lang: str) -> str:
+def _post_normalize_gu_translation(
+    text: str,
+    target_lang: str,
+    *,
+    strip_outer: bool = False,
+) -> str:
     if target_lang.lower() not in ("gujarati", "gu"):
         return text
     out = text
@@ -102,7 +107,7 @@ def _post_normalize_gu_translation(text: str, target_lang: str) -> str:
     # collapse extra spaces introduced by removals
     out = re.sub(r"[ \t]{2,}", " ", out)
     out = re.sub(r"\n{3,}", "\n\n", out)
-    return out.strip()
+    return out.strip() if strip_outer else out
 
 
 TRANSLATION_ENDPOINTS = {
@@ -254,7 +259,10 @@ async def translate_text(
                 result = await response.json()
                 translated_text = result["choices"][0]["text"].strip()
                 translated_text = _fix_dandas(translated_text)
-                translated_text = _post_normalize_gu_translation(translated_text, target_lang)
+                translated_text = _post_normalize_gu_translation(
+                    translated_text,
+                    target_lang,
+                )
                 logger.info(f"Translation successful ({len(text)} -> {len(translated_text)} chars)")
                 return translated_text
 
@@ -324,7 +332,11 @@ async def translate_text_stream_fast(
                                 content = chunk_data['choices'][0].get('text', '')
                                 if content:
                                     content = _fix_dandas(content)
-                                    content = _post_normalize_gu_translation(content, target_lang)
+                                    content = _post_normalize_gu_translation(
+                                        content,
+                                        target_lang,
+                                        strip_outer=False,
+                                    )
                                     yield content
                             except json.JSONDecodeError:
                                 continue

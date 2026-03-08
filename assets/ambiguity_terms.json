@@ -39,7 +39,7 @@
       "ગરમી ન આવ"
     ],
     "type": "ask",
-    "rule": "'ગરમીમાં ન આવ' is ambiguous — it could mean anestrus (animal not showing estrus signs) OR heat stress (suffering from high temperature). You MUST ask the farmer before answering: 'શું પશુ ગરમી (estrus) ના ચિહ્નો બિલ્કુલ નથી દેખાડતું, કે ઉનાળાના ગરમ હવામાનથી પીડાય છે?'"
+    "rule": "'ગરમીમાં ન આવ' is ambiguous — it could mean anestrus (animal not showing estrus signs) OR heat stress from hot weather. Before answering, ask the farmer: 'શું પશુ ગરમી (estrus) ના ચિહ્નો બિલ્કુલ નથી દેખાડતું, કે ઉનાળાના ગરમ હવામાનથી પીડાય છે?'"
   },
   {
     "gu_terms": [

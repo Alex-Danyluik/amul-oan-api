@@ -7,7 +7,7 @@
   {
     "gu_terms": ["મોટું", "વધારવ", "બાવલ", "આઉ મોટ", "baval motu", "au motu"],
     "type": "ask",
-    "rule": "Udder 'મોટું/વધારવું' (big/grow/increase) could mean udder development before first lactation OR udder swelling (mastitis symptom). Ask: 'Is the udder swollen or hard (possible infection), or are you asking how to develop the udder before calving?'"
+    "rule": "Udder 'મોટું/વધારવું' could mean udder development before first lactation OR udder swelling (mastitis symptom). You MUST ask before answering: 'Is the udder swollen or hard (possible infection), or are you asking how to develop the udder before calving?'"
   },
   {
     "gu_terms": ["શીંગ", "shing", "shinga", "શિંગ"],
@@ -17,22 +17,22 @@
   {
     "gu_terms": ["ગરમીમાં ન આવ", "garmi ma na av", "ગરમીએ ન આવ", "ગરમી ન આવ"],
     "type": "ask",
-    "rule": "'ગરમીમાં ન આવવી' could mean the animal is not coming into heat/estrus (anestrus) OR is suffering from heat/temperature stress. Ask: 'Is the animal not showing heat signs at all, or is it suffering from hot weather stress?'"
+    "rule": "'ગરમીમાં ન આવ' is ambiguous — it could mean anestrus (animal not showing estrus signs) OR heat stress (suffering from high temperature). You MUST ask the farmer before answering: 'શું પશુ ગરમી (estrus) ના ચિહ્નો બિલ્કુલ નથી દેખાડતું, કે ઉનાળાના ગરમ હવામાનથી પીડાય છે?'"
   },
   {
     "gu_terms": ["ભાવ", "ભાવફેર", "price", "bhav"],
     "context": "dairy milk price",
     "type": "ask",
-    "rule": "When asked about milk price, do not give a specific union's rate directly. Clarify which dairy union/cooperative the farmer belongs to, since prices differ by union. Ask: 'Which dairy union or cooperative are you asking about?'"
+    "rule": "When asked about milk price, do not give a specific union's rate directly. You MUST ask which dairy union/cooperative the farmer belongs to before answering. Ask: 'Which dairy union or cooperative are you asking about?'"
   },
   {
-    "gu_terms": ["HF", "ટ્રેક", "ટ્રેક નંબર", "track number", "receipt"],
-    "type": "clarify",
-    "rule": "'HF ટ્રેક નંબર' may refer to animal ear tag / identification number, not a service receipt. Clarify: 'Are you asking about your animal's ear tag or identification number?'"
+    "gu_terms": ["HF ટ્રેક", "HF track", "ટ્રેક નંબર", "track number"],
+    "type": "hardcode",
+    "rule": "'HF ટ્રેક નંબર' is an agricultural topic — it refers to the AI (Artificial Insemination) service receipt or semen tracking number given after HF bull semen insemination. This IS within your domain. Answer that the farmer should contact their local Amul AI center or taluka dairy union for a copy of their AI service receipt, or check with the inseminator who performed the service."
   },
   {
-    "gu_terms": ["બે આંચળ", "બે ભાગ", "two quarter", "બે ભાગમ", "બે આંચળ"],
+    "gu_terms": ["બે આંચળ", "બે ભાગ", "two quarter", "બે ભાગમ"],
     "type": "ask",
-    "rule": "'બે આંચળ/ભાગમાં દૂધ ઓછું' (low milk from two quarters) could be a structural/nutritional issue OR subclinical mastitis. Before assuming mastitis, consider nutritional and management causes. Do not diagnose mastitis without asking about other symptoms (swelling, heat, clots in milk)."
+    "rule": "'બે આંચળ/ભાગમાં દૂધ ઓછું' (low milk from two quarters) could be structural/nutritional OR subclinical mastitis. Do not diagnose mastitis without first asking: 'શું આ આંચળ સોજા, ગરમ, અથવા સખત છે? દૂધમાં ગઠ્ઠા કે પાણીવાળું દૂધ દેખાય છે?'"
   }
 ]

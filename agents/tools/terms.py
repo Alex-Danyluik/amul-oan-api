@@ -1,10 +1,34 @@
 import json
+from pathlib import Path
 from enum import Enum
 from pydantic import BaseModel, Field, field_validator
 from rapidfuzz import fuzz
 
 # Load term pairs from JSON file with UTF-8 encoding
 term_pairs = json.load(open('assets/glossary_terms.json', 'r', encoding='utf-8'))
+
+
+def _load_gu_term_policy() -> dict:
+    candidates = [
+        Path.cwd() / "assets/gu_term_policy.json",
+        Path(__file__).resolve().parents[2] / "assets/gu_term_policy.json",
+    ]
+    for path in candidates:
+        if path.exists():
+            try:
+                with path.open("r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                return {}
+    return {}
+
+
+GU_TERM_POLICY = _load_gu_term_policy()
+PREFERRED_GU_BY_EN = {
+    str(k).strip().lower(): str(v).strip()
+    for k, v in (GU_TERM_POLICY.get("preferred", {}) if isinstance(GU_TERM_POLICY, dict) else {}).items()
+    if str(k).strip() and str(v).strip()
+}
 
 class Language(str, Enum):
     ENGLISH = "en"
@@ -27,7 +51,11 @@ for pair in term_pairs:
     # If 'gu' is not present but 'mr' is, use 'mr' as 'gu'
     if 'gu' not in pair and 'mr' in pair:
         pair['gu'] = pair['mr']
+    en_key = str(pair.get("en", "")).strip().lower()
+    if en_key in PREFERRED_GU_BY_EN:
+        pair["gu"] = PREFERRED_GU_BY_EN[en_key]
     TERM_PAIRS.append(TermPair(**pair))
+
 
 async def search_terms(
     term: str, 
@@ -135,3 +163,62 @@ def normalize_text_with_glossary(text: str, threshold=97):
             return f"{word} [{gujarati}]"
 
     return GLOSSARY_PATTERN.sub(replacer, text)
+
+
+def get_mini_glossary_for_text(
+    text: str,
+    threshold: float = 0.95,
+    max_terms: int = 25,
+) -> str:
+    """
+    Find glossary terms that appear in `text` (exact or fuzzy match with high threshold)
+    and return a mini-glossary string for injection into a translation prompt.
+
+    Uses word and multi-word phrase spans (1–4 words) from the text, fuzzy-matched
+    against EN_TERMS, so Gemma can use consistent Gujarati terminology.
+
+    Args:
+        text: The sentence or batch to be translated (English).
+        threshold: Minimum similarity 0–1 (default 0.95). Converted to 0–100 for rapidfuzz.
+        max_terms: Maximum number of (en -> gu) pairs to include (default 25).
+
+    Returns:
+        Formatted string like "Mastitis -> આઉનો/બાવલાનો સોજો\\nMilk Production -> ..."
+        or empty string if no matches.
+    """
+    if not text or not text.strip():
+        return ""
+    score_cutoff = int(threshold * 100) if 0 < threshold <= 1 else 95
+    # Normalize phrase candidates so punctuation doesn't reduce fuzzy matches.
+    words = re.findall(r"[A-Za-z0-9\-/]+", text)
+    if not words:
+        return ""
+    # Dedupe by canonical English term (lowercase key)
+    term_to_gu: dict[str, tuple[str, str]] = {}  # en_lower -> (en_display, gu)
+    seen_phrases: set[str] = set()
+
+    # Longer phrases first so we match "Milk Production" before "Milk"
+    for n in range(min(4, len(words)), 0, -1):
+        for i in range(len(words) - n + 1):
+            phrase = " ".join(words[i : i + n]).strip()
+            if not phrase or phrase in seen_phrases:
+                continue
+            seen_phrases.add(phrase)
+            match = process.extractOne(phrase, EN_TERMS, score_cutoff=score_cutoff)
+            if not match:
+                continue
+            en_term, score, _ = match
+            if en_term in term_to_gu:
+                continue
+            tp = EN_INDEX[en_term]
+            # Use original casing from glossary for display
+            term_to_gu[en_term] = (tp.en, tp.gu)
+            if len(term_to_gu) >= max_terms:
+                break
+        if len(term_to_gu) >= max_terms:
+            break
+
+    if not term_to_gu:
+        return ""
+    lines = [f"{en} -> {gu}" for en, gu in term_to_gu.values()]
+    return "\n".join(lines)

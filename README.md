@@ -1,6 +1,17 @@
 # amul-oan-api
 OAN API for AMUL implementation 
 
+## Review Notes
+
+Repository review notes for strange implementations, dead code, and unused segments are tracked in [docs/REPOSITORY_REVIEW_2026-03-10.md](/Users/kanavdwevedi/repositories/OAN/amul/amul-api-integration/amul-oan-api/docs/REPOSITORY_REVIEW_2026-03-10.md).
+Maintained docs are indexed in [docs/README.md](/Users/kanavdwevedi/repositories/OAN/amul/amul-api-integration/amul-oan-api/docs/README.md).
+
+Telemetry status summary:
+- Telemetry was not wired into the active FastAPI runtime flow and has been removed.
+
+Webview endpoint note:
+- `/auth/webview-url` validates FCM tokens by trying configured Firebase service accounts sequentially with `dry_run=True`, which adds avoidable per-request latency when multiple projects are configured.
+
 # sunbird-va-api
 
 ## Delete all volumes

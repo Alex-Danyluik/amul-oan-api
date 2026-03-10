@@ -52,6 +52,7 @@ httpx==0.28.1
 # Search and Data
 marqo==3.18.0
 rapidfuzz==3.14.3
+regex
 
 # Authentication and Security
 PyJWT==2.10.1
@@ -59,6 +60,7 @@ cryptography==46.0.4
 firebase-admin>=6.0.0
 
 # Async utilities
+aiohttp>=3.9.0
 aiofiles==25.1.0
 aiocache==0.12.3
 pydantic-settings==2.12.0

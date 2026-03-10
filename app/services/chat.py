@@ -13,8 +13,6 @@ from app.utils import (
     trim_history, 
     format_message_pairs
 )
-from helpers.telemetry import create_moderation_event, TelemetryRequest
-from app.tasks.telemetry import send_telemetry
 from app.tasks.suggestions import create_suggestions
 from agents.deps import FarmerContext
 from agents.tools.farmer import get_farmer_data_by_mobile
@@ -294,8 +292,6 @@ async def stream_chat_messages(
                 moderation_data.action,
             )
 
-            # # Create the moderation event
-            # moderation_event = create_moderation_event(...)
             # Generate suggestions after moderation passes
             if moderation_data.category == "valid_agricultural":
                 # Extra guard: do not allow admin/profile/language-switch requests

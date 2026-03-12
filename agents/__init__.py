@@ -6,12 +6,6 @@ load_dotenv()
 # Track if any OTEL exporter is configured
 has_otel_exporter = False
 
-# Conditionally configure Logfire if token is set
-if os.getenv("LOGFIRE_TOKEN"):
-    import logfire
-    logfire.configure(scrubbing=False)
-    has_otel_exporter = True
-
 # Conditionally configure Langfuse if env vars are set
 langfuse_public_key = os.getenv("LANGFUSE_PUBLIC_KEY")
 langfuse_secret_key = os.getenv("LANGFUSE_SECRET_KEY")

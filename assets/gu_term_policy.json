@@ -30,6 +30,37 @@
       "બીજદાન"
     ]
   },
+  "input_aliases": {
+    "udder": [
+      "mammary gland",
+      "udder region",
+      "mammary area"
+    ],
+    "deworming": [
+      "dewormer",
+      "deworm"
+    ],
+    "mastitis": [
+      "udder infection",
+      "udder edema",
+      "sub-clinical mastitis",
+      "subclinical mastitis"
+    ],
+    "artificial insemination": [
+      "ai",
+      "a.i.",
+      "insemination",
+      "ai service",
+      "ai receipt",
+      "semen dose",
+      "track number"
+    ],
+    "breeding": [
+      "breeder",
+      "reproduction",
+      "repeat breeder"
+    ]
+  },
   "forbidden": {
     "પાહો": "બાવલું",
     "ટીપાં": "ધાર",

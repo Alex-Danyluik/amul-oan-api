@@ -79,23 +79,10 @@ def _build_gu_policy_replacements(policy: dict) -> list[tuple[str, str]]:
 GU_POST_REPLACEMENTS_BASE = [
     (r"(?i)red\s*colour\s*-?\s*delete", ""),
     (r"(?i)red\s*colour", ""),
+    # Keep only script/format cleanup and a couple of safe transliteration fixes here.
+    # Terminology ownership should live in the glossary/policy layers.
     (r"(?i)\bpaho\b", "બાવલું"),
     (r"ગર્ભવતી", "ગાભણ"),
-    (r"પાહો", "બાવલું"),
-    (r"ટીપાં", "ધાર"),
-    (r"શિશુ\s*પશુ", "નાના બચ્ચા/વાછરડી"),
-    (r"\bટોળા\b", "ધણ"),
-    (r"સંતુલિત\s*પશુ\s*ચારો", "પશુદાણ"),
-    (r"ગર્ભાધાન", "બીજદાન"),
-    (r"ટિક્કી", "ઇતરડી"),
-    (r"સ્તનના\s*નિપલ્સ", "આંચળ"),
-    (r"સ્તન\s*પ્રદેશ", "બાવલા ના ભાગ"),
-    (r"\bકીડા\b", "કૃમિ"),
-    (r"ઇતરડીનાશક\s*દવાઓ", "કીટનાશક દવાનો ઉપયોગ"),
-    (r"\bપીપી\b", "પોટેશિયમ પરમેંગેનેટના દ્રાવણ"),
-    (r"નાની\s*ઈજા", "નાની તિરાડો"),
-    (r"\bપાડુ\b", "બચ્ચું"),
-    (r"તાવના\s*તબક્કામાં", "તાવના શરૂઆત ના તબક્કામાં"),
 ]
 GU_TERM_POLICY = _load_gu_term_policy()
 GU_POLICY_REPLACEMENTS = _build_gu_policy_replacements(GU_TERM_POLICY)

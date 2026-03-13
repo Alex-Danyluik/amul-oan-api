@@ -11,7 +11,10 @@
     "potassium permanganate antiseptic solution": "પોટેશિયમ પરમેંગેનેટના દ્રાવણ",
     "optimal ai time": "કૃત્રિમ બીજદાનનો યોગ્ય સમય",
     "reproduction / breeding / insemination": "પ્રજનન / કૃત્રિમ બીજદાન",
-    "tdn — total digestible nutrients": "કુલ પાચ્ય પોષક તત્વ (ટીડીએન)"
+    "tdn — total digestible nutrients": "કુલ પાચ્ય પોષક તત્વ (ટીડીએન)",
+    "nutrients / feed additives": "પોષક તત્વો / ફીડ એડિટિવ્સ",
+    "feed supplements": "ફીડ સપ્લીમેન્ટ્સ",
+    "appetite and milk production support nutrients": "ભૂખ અને દૂધ ઉત્પાદન સુધારતા પોષક તત્વો / ફીડ એડિટિવ્સ"
   },
   "allowed_aliases": {
     "heifer": [
@@ -46,6 +49,12 @@
     ],
     "tdn — total digestible nutrients": [
       "કુલ પાચ્ય પોષક તત્વ (ટીડીએન)"
+    ],
+    "nutrients / feed additives": [
+      "પોષક તત્વો / ફીડ એડિટિવ્સ"
+    ],
+    "feed supplements": [
+      "ફીડ સપ્લીમેન્ટ્સ"
     ]
   },
   "input_aliases": {
@@ -92,9 +101,27 @@
     "tdn — total digestible nutrients": [
       "tdn",
       "total digestible nutrients"
+    ],
+    "nutrients / feed additives": [
+      "nutrients",
+      "feed additive",
+      "feed additives",
+      "nutritional additives"
+    ],
+    "feed supplements": [
+      "feed supplement",
+      "feed supplements",
+      "supplement",
+      "supplements"
+    ],
+    "appetite and milk production support nutrients": [
+      "plants that improve appetite and milk production",
+      "ingredients that improve appetite and milk production"
     ]
   },
   "forbidden": {
+    "એવી વનસ્પતિઓ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે": "એવા પોષક તત્વો / ફીડ એડિટિવ્સ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે",
+    "વનસ્પતિઓ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે": "પોષક તત્વો / ફીડ એડિટિવ્સ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે",
     "માખીઓનું બીજદાન": "માખીઓનું પ્રજનન",
     "વોડકી": "પાડી",
     "પાહો": "બાવલું",

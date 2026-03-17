@@ -1,13 +1,25 @@
 {
   "preferred": {
+    "heifer": "પાડી",
     "udder": "બાવલું",
     "teat": "આંચળ",
     "deworming": "કૃમિનાશક દવા",
     "mastitis": "આઉનો/બાવલાનો સોજો",
     "artificial insemination": "કૃત્રિમ બીજદાન",
-    "breeding": "બીજદાન"
+    "breeding": "પ્રજનન",
+    "perineal area": "મૂત્રાશય ના ભાગ",
+    "potassium permanganate antiseptic solution": "પોટેશિયમ પરમેંગેનેટના દ્રાવણ",
+    "optimal ai time": "કૃત્રિમ બીજદાનનો યોગ્ય સમય",
+    "reproduction / breeding / insemination": "પ્રજનન / કૃત્રિમ બીજદાન",
+    "tdn — total digestible nutrients": "કુલ પાચ્ય પોષક તત્વ (ટીડીએન)",
+    "nutrients / feed additives": "પોષક તત્વો / ફીડ એડિટિવ્સ",
+    "feed supplements": "ફીડ સપ્લીમેન્ટ્સ",
+    "appetite and milk production support nutrients": "ભૂખ અને દૂધ ઉત્પાદન સુધારતા પોષક તત્વો / ફીડ એડિટિવ્સ"
   },
   "allowed_aliases": {
+    "heifer": [
+      "પાડી"
+    ],
     "udder": [
       "આઉ",
       "બાવલું",
@@ -25,21 +37,107 @@
     ],
     "artificial insemination": [
       "બીજદાન કરાવવું, ડોજ મુકાવવો"
+    ],
+    "breeding": [
+      "બીજદાન"
+    ],
+    "perineal area": [
+      "મૂત્રાશય ના ભાગ"
+    ],
+    "potassium permanganate antiseptic solution": [
+      "પોટેશિયમ પરમેંગેનેટના દ્રાવણ"
+    ],
+    "tdn — total digestible nutrients": [
+      "કુલ પાચ્ય પોષક તત્વ (ટીડીએન)"
+    ],
+    "nutrients / feed additives": [
+      "પોષક તત્વો / ફીડ એડિટિવ્સ"
+    ],
+    "feed supplements": [
+      "ફીડ સપ્લીમેન્ટ્સ"
+    ]
+  },
+  "input_aliases": {
+    "heifer": [
+      "heifers"
+    ],
+    "udder": [
+      "mammary gland",
+      "udder region",
+      "mammary area"
+    ],
+    "deworming": [
+      "dewormer",
+      "deworm"
+    ],
+    "mastitis": [
+      "udder infection",
+      "udder edema",
+      "sub-clinical mastitis",
+      "subclinical mastitis"
+    ],
+    "artificial insemination": [
+      "ai",
+      "a.i.",
+      "insemination",
+      "ai service",
+      "ai receipt",
+      "semen dose",
+      "track number"
+    ],
+    "breeding": [
+      "breeder",
+      "reproduction",
+      "repeat breeder"
+    ],
+    "perineal area": [
+      "perineal region",
+      "perineal areas"
+    ],
+    "potassium permanganate antiseptic solution": [
+      "potassium permanganate solution",
+      "pp solution"
+    ],
+    "tdn — total digestible nutrients": [
+      "tdn",
+      "total digestible nutrients"
+    ],
+    "nutrients / feed additives": [
+      "nutrients",
+      "feed additive",
+      "feed additives",
+      "nutritional additives"
+    ],
+    "feed supplements": [
+      "feed supplement",
+      "feed supplements",
+      "supplement",
+      "supplements"
+    ],
+    "appetite and milk production support nutrients": [
+      "plants that improve appetite and milk production",
+      "ingredients that improve appetite and milk production"
     ]
   },
   "forbidden": {
+    "એવી વનસ્પતિઓ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે": "એવા પોષક તત્વો / ફીડ એડિટિવ્સ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે",
+    "વનસ્પતિઓ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે": "પોષક તત્વો / ફીડ એડિટિવ્સ હોય છે જે ભૂખ અને દૂધ ઉત્પાદનમાં સુધારો કરે છે",
+    "માખીઓનું બીજદાન": "માખીઓનું પ્રજનન",
+    "વોડકી": "પાડી",
     "પાહો": "બાવલું",
     "ટીપાં": "ધાર",
     "ટોળા": "ધણ",
     "કીડા": "કૃમિ",
     "ગર્ભાધાન": "બીજદાન",
     "ટિક્કી": "ઇતરડી",
+    "પેરીનિયલ વિસ્તારો": "મૂત્રાશય ના ભાગ",
     "સ્તનના નિપલ્સ": "આંચળ",
     "સ્તન પ્રદેશ": "આઉ/બાવલા ના ભાગ",
     "પીપી": "પોટેશિયમ પરમેંગેનેટના દ્રાવણ",
+    "પોટેશિયમ પરમેંગેનેટ": "પોટેશિયમ પરમેંગેનેટના દ્રાવણ",
+    "ટીડીએન": "કુલ પાચ્ય પોષક તત્વ (ટીડીએન)",
     "નાની ઈજા": "નાની તિરાડો",
-    "પાડુ": "બચ્ચું",
     "તાવના તબક્કામાં": "તાવના શરૂઆત ના તબક્કામાં",
-    "ઇતરડીનાશક દવાઓ": "કીટનાશક દવાનો ઉપયોગ"
+    "ઇતરડીનાશક દવાઓ": "કીટનાશક દવાનો છંટકાવ"
   }
 }

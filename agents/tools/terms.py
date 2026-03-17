@@ -3,6 +3,7 @@ from pathlib import Path
 from enum import Enum
 from pydantic import BaseModel, Field, field_validator
 from rapidfuzz import fuzz
+import re
 
 # Load term pairs from JSON file with UTF-8 encoding
 term_pairs = json.load(open('assets/glossary_terms.json', 'r', encoding='utf-8'))
@@ -28,6 +29,16 @@ PREFERRED_GU_BY_EN = {
     str(k).strip().lower(): str(v).strip()
     for k, v in (GU_TERM_POLICY.get("preferred", {}) if isinstance(GU_TERM_POLICY, dict) else {}).items()
     if str(k).strip() and str(v).strip()
+}
+ALLOWED_ALIASES_BY_EN = {
+    str(k).strip().lower(): [str(v).strip() for v in vals if str(v).strip()]
+    for k, vals in (GU_TERM_POLICY.get("allowed_aliases", {}) if isinstance(GU_TERM_POLICY, dict) else {}).items()
+    if str(k).strip() and isinstance(vals, list)
+}
+INPUT_ALIASES_BY_EN = {
+    str(k).strip().lower(): [str(v).strip() for v in vals if str(v).strip()]
+    for k, vals in (GU_TERM_POLICY.get("input_aliases", {}) if isinstance(GU_TERM_POLICY, dict) else {}).items()
+    if str(k).strip() and isinstance(vals, list)
 }
 
 class Language(str, Enum):
@@ -112,13 +123,73 @@ async def search_terms(
 
 
 ### Utility functions for Correcting Document Search Results
-
-import re
 from rapidfuzz import process
 
 # Build English index from glossary
 EN_INDEX = {tp.en.lower(): tp for tp in TERM_PAIRS}
 EN_TERMS = list(EN_INDEX.keys())
+
+
+def _normalize_lookup_key(text: str) -> str:
+    text = str(text or "").lower().strip()
+    if not text:
+        return ""
+    text = text.replace("’", "'")
+    text = re.sub(r"[^\w\s/\-().'&]+", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def _strip_parenthetical_suffix(text: str) -> str:
+    return re.sub(r"\s*\([^)]*\)\s*$", "", _normalize_lookup_key(text)).strip()
+
+
+def _canonical_display_term(canonical_en: str) -> str:
+    for tp in TERM_PAIRS:
+        if _normalize_lookup_key(tp.en) == canonical_en:
+            return tp.en
+    return canonical_en.title()
+
+
+def _build_canonical_alias_map() -> tuple[dict[str, tuple[str, str]], dict[str, str]]:
+    canonical_terms: dict[str, tuple[str, str]] = {}
+    alias_to_canonical: dict[str, str] = {}
+
+    for canonical_en, preferred_gu in PREFERRED_GU_BY_EN.items():
+        canonical_terms[canonical_en] = (_canonical_display_term(canonical_en), preferred_gu)
+        aliases = {canonical_en}
+        aliases.update(_normalize_lookup_key(alias) for alias in INPUT_ALIASES_BY_EN.get(canonical_en, []))
+        aliases.update(_normalize_lookup_key(alias) for alias in ALLOWED_ALIASES_BY_EN.get(canonical_en, []))
+
+        for tp in TERM_PAIRS:
+            norm_en = _normalize_lookup_key(tp.en)
+            stripped_en = _strip_parenthetical_suffix(tp.en)
+            if not norm_en:
+                continue
+            if norm_en == canonical_en or stripped_en == canonical_en or tp.gu == preferred_gu:
+                aliases.add(norm_en)
+
+        for alias in aliases:
+            if alias:
+                alias_to_canonical[alias] = canonical_en
+
+    return canonical_terms, alias_to_canonical
+
+
+CANONICAL_TERMS, ALIAS_TO_CANONICAL_EN = _build_canonical_alias_map()
+CANONICAL_ALIAS_TERMS = list(ALIAS_TO_CANONICAL_EN.keys())
+
+
+def _tokenize_lookup_key(text: str) -> list[str]:
+    return [token for token in re.split(r"[\s/\-().&]+", _normalize_lookup_key(text)) if token]
+
+
+def _has_meaningful_token_overlap(left: str, right: str) -> bool:
+    left_tokens = {token for token in _tokenize_lookup_key(left) if len(token) >= 3}
+    right_tokens = {token for token in _tokenize_lookup_key(right) if len(token) >= 3}
+    if not left_tokens or not right_tokens:
+        return False
+    return bool(left_tokens & right_tokens)
 
 def build_glossary_pattern(terms):
     """
@@ -141,19 +212,24 @@ def normalize_text_with_glossary(text: str, threshold=97):
 
     def replacer(match):
         word = match.group(0)
-        lw = word.lower().strip()
+        lw = _normalize_lookup_key(word)
 
-        # Exact match
-        if lw in EN_INDEX:
+        canonical_en = ALIAS_TO_CANONICAL_EN.get(lw)
+        if canonical_en:
+            gujarati = CANONICAL_TERMS[canonical_en][1]
+        elif lw in EN_INDEX:
             gujarati = EN_INDEX[lw].gu
         else:
-            # Fuzzy fallback (very high threshold to avoid false positives)
-            match_term, score, _ = process.extractOne(
-                lw, EN_TERMS, score_cutoff=threshold
-            ) or (None, 0, None)
-            if not match_term:
-                return word
-            gujarati = EN_INDEX[match_term].gu
+            alias_match = process.extractOne(lw, CANONICAL_ALIAS_TERMS, score_cutoff=threshold) or (None, 0, None)
+            if alias_match and alias_match[0]:
+                gujarati = CANONICAL_TERMS[ALIAS_TO_CANONICAL_EN[alias_match[0]]][1]
+            else:
+                match_term, score, _ = process.extractOne(
+                    lw, EN_TERMS, score_cutoff=threshold, scorer=fuzz.ratio
+                ) or (None, 0, None)
+                if not match_term:
+                    return word
+                gujarati = EN_INDEX[match_term].gu
 
         # Decide spacing: if next char is alphanumeric, add space after replacement
         after = match.end()
@@ -204,15 +280,48 @@ def get_mini_glossary_for_text(
             if not phrase or phrase in seen_phrases:
                 continue
             seen_phrases.add(phrase)
-            match = process.extractOne(phrase, EN_TERMS, score_cutoff=score_cutoff)
-            if not match:
-                continue
-            en_term, score, _ = match
-            if en_term in term_to_gu:
-                continue
-            tp = EN_INDEX[en_term]
-            # Use original casing from glossary for display
-            term_to_gu[en_term] = (tp.en, tp.gu)
+            normalized_phrase = _normalize_lookup_key(phrase)
+            canonical_en = ALIAS_TO_CANONICAL_EN.get(normalized_phrase)
+
+            if not canonical_en:
+                alias_match = None
+                if n >= 2 and len(normalized_phrase) >= 6:
+                    alias_match = process.extractOne(
+                        normalized_phrase,
+                        CANONICAL_ALIAS_TERMS,
+                        score_cutoff=score_cutoff,
+                        scorer=fuzz.ratio,
+                    )
+                if alias_match and _has_meaningful_token_overlap(normalized_phrase, alias_match[0]):
+                    canonical_en = ALIAS_TO_CANONICAL_EN.get(alias_match[0])
+
+            if canonical_en:
+                if canonical_en in term_to_gu:
+                    continue
+                term_to_gu[canonical_en] = CANONICAL_TERMS[canonical_en]
+            else:
+                if n == 1:
+                    exact_term = EN_INDEX.get(normalized_phrase)
+                    if not exact_term:
+                        continue
+                    match = (exact_term.en.lower(), 100, None)
+                else:
+                    match = process.extractOne(
+                        normalized_phrase,
+                        EN_TERMS,
+                        score_cutoff=score_cutoff,
+                        scorer=fuzz.ratio,
+                    )
+                    if match and not _has_meaningful_token_overlap(normalized_phrase, match[0]):
+                        match = None
+                if not match:
+                    continue
+                en_term, score, _ = match
+                if en_term in term_to_gu:
+                    continue
+                tp = EN_INDEX[en_term]
+                # Use original casing from glossary for display
+                term_to_gu[en_term] = (tp.en, tp.gu)
             if len(term_to_gu) >= max_terms:
                 break
         if len(term_to_gu) >= max_terms:
@@ -222,3 +331,78 @@ def get_mini_glossary_for_text(
         return ""
     lines = [f"{en} -> {gu}" for en, gu in term_to_gu.values()]
     return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Ambiguity hints — dynamically injected into system prompt based on query
+# ---------------------------------------------------------------------------
+
+def _load_ambiguity_terms() -> list:
+    candidates = [
+        Path.cwd() / "assets/ambiguity_terms.json",
+        Path(__file__).resolve().parents[2] / "assets/ambiguity_terms.json",
+    ]
+    for path in candidates:
+        if path.exists():
+            try:
+                with path.open("r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                return []
+    return []
+
+
+_AMBIGUITY_TERMS = _load_ambiguity_terms()
+
+
+def get_ambiguity_hints_for_query(query: str, threshold: float = 0.80) -> str:
+    """
+    Fuzzy-match incoming query (any language) against ambiguity_terms.json.
+    Returns a formatted string of matching rules to inject into the system prompt,
+    or empty string if no matches.
+
+    Args:
+        query: The raw user query string.
+        threshold: Minimum similarity 0-1 (default 0.80, lower than glossary since
+                   Gujarati term matching is fuzzier).
+
+    Returns:
+        Formatted rules string, e.g.:
+          "- 'ઉથલા' always means repeat breeder, NOT vomiting."
+        or "" if no terms matched.
+    """
+    if not query or not _AMBIGUITY_TERMS:
+        return ""
+
+    score_cutoff = int(threshold * 100)
+    matched_rules = []
+    seen = set()
+
+    query_lower = query.lower().strip()
+
+    for entry in _AMBIGUITY_TERMS:
+        gu_terms = entry.get("gu_terms", [])
+        rule = entry.get("rule", "").strip()
+        if not rule or not gu_terms:
+            continue
+
+        # Check each trigger term against the query using substring + fuzzy
+        for term in gu_terms:
+            term_lower = term.lower().strip()
+            if not term_lower:
+                continue
+            # Substring match first (fast path)
+            if term_lower in query_lower:
+                if rule not in seen:
+                    matched_rules.append(f"- {rule}")
+                    seen.add(rule)
+                break
+            # Fuzzy match fallback
+            score = fuzz.partial_ratio(term_lower, query_lower)
+            if score >= score_cutoff:
+                if rule not in seen:
+                    matched_rules.append(f"- {rule}")
+                    seen.add(rule)
+                break
+
+    return "\n".join(matched_rules)

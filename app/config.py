@@ -80,7 +80,6 @@ class Settings(BaseSettings):
     anthropic_api_key: Optional[str] = None
     sarvam_api_key: Optional[str] = None
     meity_api_key_value: Optional[str] = None
-    logfire_token: Optional[str] = None
     langfuse_public_key: Optional[str] = None
     langfuse_secret_key: Optional[str] = None
     langfuse_base_url: Optional[str] = None

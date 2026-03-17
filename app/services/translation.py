@@ -8,6 +8,7 @@ TranslateGemma 27B base model deployed on vLLM.
 import os
 import json
 import re
+import random
 import aiohttp
 from pathlib import Path
 from typing import Literal, Optional
@@ -78,23 +79,10 @@ def _build_gu_policy_replacements(policy: dict) -> list[tuple[str, str]]:
 GU_POST_REPLACEMENTS_BASE = [
     (r"(?i)red\s*colour\s*-?\s*delete", ""),
     (r"(?i)red\s*colour", ""),
+    # Keep only script/format cleanup and a couple of safe transliteration fixes here.
+    # Terminology ownership should live in the glossary/policy layers.
     (r"(?i)\bpaho\b", "બાવલું"),
     (r"ગર્ભવતી", "ગાભણ"),
-    (r"પાહો", "બાવલું"),
-    (r"ટીપાં", "ધાર"),
-    (r"શિશુ\s*પશુ", "નાના બચ્ચા/વાછરડી"),
-    (r"\bટોળા\b", "ધણ"),
-    (r"સંતુલિત\s*પશુ\s*ચારો", "પશુદાણ"),
-    (r"ગર્ભાધાન", "બીજદાન"),
-    (r"ટિક્કી", "ઇતરડી"),
-    (r"સ્તનના\s*નિપલ્સ", "આંચળ"),
-    (r"સ્તન\s*પ્રદેશ", "બાવલા ના ભાગ"),
-    (r"\bકીડા\b", "કૃમિ"),
-    (r"ઇતરડીનાશક\s*દવાઓ", "કીટનાશક દવાનો ઉપયોગ"),
-    (r"\bપીપી\b", "પોટેશિયમ પરમેંગેનેટના દ્રાવણ"),
-    (r"નાની\s*ઈજા", "નાની તિરાડો"),
-    (r"\bપાડુ\b", "બચ્ચું"),
-    (r"તાવના\s*તબક્કામાં", "તાવના શરૂઆત ના તબક્કામાં"),
 ]
 GU_TERM_POLICY = _load_gu_term_policy()
 GU_POLICY_REPLACEMENTS = _build_gu_policy_replacements(GU_TERM_POLICY)
@@ -129,6 +117,14 @@ TRANSLATION_ENDPOINTS = {
     "27b": os.getenv("TRANSLATEGEMMA_27B_ENDPOINT", "http://localhost:8085/v1"),
     "27b-base": os.getenv("TRANSLATEGEMMA_27B_BASE_ENDPOINT", "http://localhost:18002/v1"),
 }
+
+# Multi-endpoint support: comma-separated list for load-balanced 27b-base
+_27b_base_ep_raw = os.getenv("TRANSLATEGEMMA_27B_BASE_ENDPOINTS", "").strip()
+TRANSLATION_ENDPOINTS_27B_BASE: list[str] = (
+    [e.strip() for e in _27b_base_ep_raw.split(",") if e.strip()]
+    if _27b_base_ep_raw
+    else [TRANSLATION_ENDPOINTS["27b-base"]]
+)
 
 DEFAULT_TRANSLATION_MODEL = os.getenv("DEFAULT_TRANSLATION_MODEL", "27b-base")
 
@@ -220,7 +216,7 @@ def _resolve_model(model_size: Optional[str], target_lang: str) -> tuple[str, Op
     Returns (model_size, endpoint, model_id).
     """
     model_size = "27b-base"
-    endpoint = TRANSLATION_ENDPOINTS.get(model_size)
+    endpoint = random.choice(TRANSLATION_ENDPOINTS_27B_BASE)
     model_id = TRANSLATION_MODEL_IDS.get(model_size)
     return model_size, endpoint, model_id
 

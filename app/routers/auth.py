@@ -2,7 +2,6 @@
 Simple authentication router that generates JWT tokens for the frontend.
 This closes the auth loop - FE can call this endpoint to get a valid token.
 """
-from agents.tools.farmer import get_farmer_data_by_mobile
 import os
 import uuid
 from datetime import datetime, timedelta
@@ -84,43 +83,6 @@ def create_jwt_for_phone(phone: str, expires_days: int = 365) -> str:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to generate token: {str(e)}",
         )
-
-
-def create_jwt_for_phone_with_data(
-    phone: str,
-    farmer_data: dict | None = None,
-    expires_days: int = 365,
-) -> str:
-    """
-    Create a JWT containing phone number and pre-fetched farmer data.
-    Used by the demo-ui integration so the chat UI gets farmer context immediately.
-    """
-    try:
-        private_key = load_private_key()
-        exp = datetime.utcnow() + timedelta(days=expires_days)
-        iat = datetime.utcnow()
-        payload = {
-            "phone": phone,
-            "sub": phone,
-            "iat": int(iat.timestamp()),
-            "exp": int(exp.timestamp()),
-            "aud": "oan-ui-service",
-            "iss": "mh-oan-api",
-        }
-        if farmer_data:
-            payload["data"] = farmer_data
-        return jwt.encode(
-            payload,
-            private_key,
-            algorithm=settings.jwt_algorithm,
-        )
-    except Exception as e:
-        logger.error(f"Error creating JWT for phone with data: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to generate token: {str(e)}",
-        )
-
 
 def create_anonymous_jwt_token(expires_days: float = 1.0) -> str:
     """
@@ -270,16 +232,15 @@ def _require_api_key(
 
 @router.post(
     "/token-for-phone",
-    summary="Generate JWT with farmer data for a phone number (API-key auth)",
+    summary="Generate JWT for a phone number (API-key auth)",
     responses={
         200: {
-            "description": "JWT with embedded farmer data + webview URL",
+            "description": "JWT with phone number + webview URL",
             "content": {"application/json": {"example": {
                 "url": "https://app.example.com?token=eyJ...",
                 "access_token": "eyJ...",
                 "token_type": "bearer",
                 "expires_in": 86400,
-                "farmer_records_count": 2,
             }}},
         },
         400: {"description": "Invalid phone number"},
@@ -291,27 +252,13 @@ async def token_for_phone(
     _key: str = Depends(_require_api_key),
 ):
     """
-    Fetch farmer data from PashuGPT APIs for the given phone number,
-    embed it in a signed JWT, and return the token + webview URL.
+    Create a signed JWT for the given phone number and return the token + webview URL.
 
     Intended for trusted server-side callers (e.g. demo-ui backend).
     Requires `api_key` query parameter matching `DEMO_UI_API_KEY` env var.
     """
     phone = _validate_phone(body.phone)
-
-    # Fetch farmer data from PashuGPT backends
-    farmer_records = None
-    try:
-        farmer_records = await get_farmer_data_by_mobile(phone)
-        if farmer_records is not None:
-            farmer_records = [record.model_dump() for record in farmer_records]
-    except Exception as e:
-        logger.warning(f"Failed to fetch farmer data for {phone}: {e}")
-
-    farmer_data = {"farmers": farmer_records} if farmer_records else None
-    records_count = len(farmer_records) if farmer_records else 0
-
-    token = create_jwt_for_phone_with_data(phone, farmer_data=farmer_data)
+    token = create_jwt_for_phone(phone)
 
     # Build webview URL if configured
     url = None
@@ -323,6 +270,4 @@ async def token_for_phone(
         "access_token": token,
         "token_type": "bearer",
         "expires_in": 365 * 24 * 60 * 60,
-        "farmer_records_count": records_count,
     }
-

@@ -32,4 +32,4 @@ class AnimalModel(BaseModel):
     def normalize_text_fields(cls, value: str | None) -> str | None:
         if value is None:
             return None
-        return " ".join((w.capitalize() for w in value.strip().lower().split(" ")))
+        return value.strip().lower()

@@ -49,11 +49,14 @@ class FarmerRecord(BaseModel):
                 "society_name": "societyName",
                 "farmer_code": "farmerCode",
                 "total_animals": "totalAnimals",
-                "animal_tags": "tagNo",
             }
             for snake, camel in _SNAKE_TO_CAMEL.items():
                 if snake in mapped and camel not in mapped:
                     mapped[camel] = mapped.pop(snake)
+            # animal_tags is a list from FarmerModel; convert back to comma-separated string for tagNo
+            if "animal_tags" in mapped and "tagNo" not in mapped:
+                tags = mapped.pop("animal_tags")
+                mapped["tagNo"] = ",".join(tags) if isinstance(tags, list) else tags
             obj = mapped
         return super().model_validate(obj, **kwargs)
 

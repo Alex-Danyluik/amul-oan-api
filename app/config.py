@@ -63,6 +63,7 @@ class Settings(BaseSettings):
     # Cache Configuration
     default_cache_ttl: int = 60 * 60 * 24  # 24 hours
     suggestions_cache_ttl: int = 60 * 30    # 30 minutes
+    farmer_animal_api_cache_ttl: int = 60 * 60 * 24 * 17  # 17 days
 
     # Logging Configuration
     log_level: str = "INFO"
@@ -89,6 +90,7 @@ class Settings(BaseSettings):
     inference_api_key: Optional[str] = None
     gemini_api_key: Optional[str] = None
     mapbox_api_token: Optional[str] = None
+    banas_mobile_api_key: Optional[str] = os.getenv("BANAS_MOBILE_API_KEY")
 
     # AWS Configuration
     aws_access_key_id: Optional[str] = None

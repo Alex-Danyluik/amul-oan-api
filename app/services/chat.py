@@ -15,7 +15,7 @@ from app.utils import (
 )
 from app.tasks.suggestions import create_suggestions
 from agents.deps import FarmerContext
-from agents.tools.farmer import get_farmer_data_by_mobile
+from agents.farmer_context import get_farmer_full_data_by_mobile
 from app.services.translation import (
     translate_text,
     translate_to_english_with_haiku,
@@ -218,16 +218,14 @@ async def stream_chat_messages(
         content_id = f"query_{session_id}_{len(history)//2 + 1}"
         logger.info("request_id=%s user_info=%s", request_id, user_info)
 
-        # Extract farmer context: prefer JWT 'data' field; if JWT has 'phone' and no data, fetch by phone
-        farmer_data = user_info.get('data') if user_info else None
-        if not farmer_data and user_info and user_info.get('phone'):
+        # Extract farmer context from phone in JWT via cache-first fetch
+        farmer_data = ""
+        if user_info and user_info.get('phone'):
             try:
-                farmer_records = await get_farmer_data_by_mobile(user_info['phone'])
-                if farmer_records:
-                    farmer_data = {"farmer_records": farmer_records}
-                    logger.info(f"Injected farmer context from phone for {len(farmer_records)} record(s)")
+                farmer_data = await get_farmer_full_data_by_mobile(user_info['phone'])
+                logger.info(f"request_id={request_id} farmer_context_length={len(farmer_data)}")
             except Exception as e:
-                logger.warning(f"Could not fetch farmer data by phone: {e}")
+                logger.warning(f"request_id={request_id} farmer_context_fetch_failed={e}")
 
         processing_query = query
         processing_lang = target_lang
@@ -285,7 +283,7 @@ async def stream_chat_messages(
         deps = FarmerContext(
             query=processing_query,
             lang_code=processing_lang,
-            farmer_info=farmer_data if farmer_data else None,
+            farmer_info=farmer_data,
             use_translation_pipeline=use_translation_pipeline,
         )
 

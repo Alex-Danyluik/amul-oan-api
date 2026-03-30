@@ -14,6 +14,7 @@ from app.utils import (
     format_message_pairs
 )
 from app.tasks.suggestions import create_suggestions
+import json
 from agents.deps import FarmerContext
 from agents.farmer_context import get_farmer_full_data_by_mobile
 from app.services.translation import (
@@ -305,15 +306,10 @@ async def stream_chat_messages(
                 moderation_data.action,
             )
 
-            # Generate suggestions after moderation passes
-            if moderation_data.category == "valid_agricultural":
-                logger.info(f"Triggering suggestions generation for session {session_id}")
-                try:
-                    background_tasks.add_task(create_suggestions, session_id, target_lang)
-                    logger.info("Successfully added suggestions task")
-                except Exception as e:
-                    logger.error(f"Error adding suggestions task: {str(e)}")
-            else:
+            # Track whether we should generate suggestions after streaming
+            should_generate_suggestions = moderation_data.category == "valid_agricultural"
+
+            if not should_generate_suggestions:
                 # Hard gate: do not run retrieval/answer agent for moderated non-agricultural requests.
                 decline_text = (moderation_data.action or "").strip() or (
                     "I can only answer agriculture and livestock related questions."
@@ -632,3 +628,13 @@ async def stream_chat_messages(
 
         logger.info(f"Updating message history for session {session_id} with {len(messages)} messages")
         await update_message_history(session_id, messages)
+
+        # Generate and yield suggestions inline so the frontend gets them
+        # immediately without a separate API call.
+        if should_generate_suggestions:
+            try:
+                suggestions = await create_suggestions(session_id, target_lang)
+                if suggestions:
+                    yield f"__SUGGESTIONS__{json.dumps(suggestions)}__END_SUGGESTIONS__"
+            except Exception as e:
+                logger.error(f"Inline suggestions generation failed: {e}")

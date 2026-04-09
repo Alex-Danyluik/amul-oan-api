@@ -3,7 +3,6 @@ from typing import AsyncGenerator
 from functools import lru_cache
 import regex
 import re
-from fastapi import BackgroundTasks
 from agents.agrinet import agrinet_agent
 from agents.moderation import moderation_agent
 from agents.models import LLM_PROVIDER
@@ -13,8 +12,6 @@ from app.utils import (
     trim_history,
     format_message_pairs
 )
-from app.tasks.suggestions import create_suggestions
-import json
 from agents.deps import FarmerContext
 from agents.farmer_context import get_farmer_full_data_by_mobile
 from app.services.translation import (
@@ -136,7 +133,6 @@ async def stream_chat_messages(
     user_id: str,
     history: list,
     user_info: dict,
-    background_tasks: BackgroundTasks,
     use_translation_pipeline: bool = False,
 ) -> AsyncGenerator[str, None]:
     """Async generator for streaming chat messages."""
@@ -306,10 +302,7 @@ async def stream_chat_messages(
                 moderation_data.action,
             )
 
-            # Track whether we should generate suggestions after streaming
-            should_generate_suggestions = moderation_data.category == "valid_agricultural"
-
-            if not should_generate_suggestions:
+            if moderation_data.category != "valid_agricultural":
                 # Hard gate: do not run retrieval/answer agent for moderated non-agricultural requests.
                 decline_text = (moderation_data.action or "").strip() or (
                     "I can only answer agriculture and livestock related questions."
@@ -628,13 +621,3 @@ async def stream_chat_messages(
 
         logger.info(f"Updating message history for session {session_id} with {len(messages)} messages")
         await update_message_history(session_id, messages)
-
-        # Generate and yield suggestions inline so the frontend gets them
-        # immediately without a separate API call.
-        if should_generate_suggestions:
-            try:
-                suggestions = await create_suggestions(session_id, target_lang)
-                if suggestions:
-                    yield f"__SUGGESTIONS__{json.dumps(suggestions)}__END_SUGGESTIONS__"
-            except Exception as e:
-                logger.error(f"Inline suggestions generation failed: {e}")

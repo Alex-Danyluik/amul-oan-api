@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from app.auth.jwt_auth import get_current_user
 from app.services.chat import stream_chat_messages
 from app.utils import _get_message_history
@@ -31,16 +31,25 @@ async def chat_endpoint(
     history = await _get_message_history(session_id)
     logger.debug(f"Retrieved message history for session {session_id} - length: {len(history)}")
         
-    return StreamingResponse(
-        stream_chat_messages(
-            query=request.query,
-            session_id=session_id,
-            source_lang=request.source_lang,
-            target_lang=request.target_lang,
-            user_id=request.user_id,
-            history=history,
-            user_info=user_info,
-            use_translation_pipeline=request.use_translation_pipeline or False,
-        ),
-        media_type='text/event-stream'
-    ) 
+    message_stream = stream_chat_messages(
+        query=request.query,
+        session_id=session_id,
+        source_lang=request.source_lang,
+        target_lang=request.target_lang,
+        user_id=request.user_id,
+        history=history,
+        user_info=user_info,
+        use_translation_pipeline=request.use_translation_pipeline or False,
+    )
+
+    if request.stream is False:
+        full_response = "".join([chunk async for chunk in message_stream])
+        return JSONResponse(
+            content={
+                "session_id": session_id,
+                "response": full_response,
+                "stream": False,
+            }
+        )
+
+    return StreamingResponse(message_stream, media_type='text/event-stream')

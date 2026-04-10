@@ -8,6 +8,7 @@ class ChatRequest(BaseModel):
     target_lang: str = Field('gu', description="Target language code")
     user_id: str = Field('anonymous', description="User identifier")
     use_translation_pipeline: Optional[bool] = Field(False, description="When True, use Gemma pre/post translation (query→en→agent→target_lang)")
+    stream: Optional[bool] = Field(True, description="When True (default), return SSE stream. When False, return a single JSON response.")
 
 class TranscribeRequest(BaseModel):
     audio_content: str = Field(..., description="Base64 encoded audio content")

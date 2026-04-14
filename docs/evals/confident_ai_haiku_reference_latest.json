@@ -1,0 +1,1203 @@
+{
+  "generated_at": "2026-04-12T16:38:24.911373+00:00",
+  "mode": "haiku_reference",
+  "identifier": "haiku-reference-20260412T163622Z",
+  "dataset_alias": "Golden Set EN QNA 2026-03-13 Haiku",
+  "sample_limit": 25,
+  "subject_model": "haiku_expected_output",
+  "judge_model": "gpt-4.1",
+  "test_run_id": "cmnvzmqmy0000pp166lthauos",
+  "confident_link": "https://app.confident-ai.com/project/cmnra4xp4002cl116ak1qt6zd/test-runs/cmnvzmqmy0000pp166lthauos/regression-testing",
+  "metrics": {
+    "Actionability [GEval]": {
+      "mean": 0.992,
+      "min": 0.9269,
+      "max": 1.0,
+      "count": 25
+    },
+    "Answer Relevancy": {
+      "mean": 0.8253,
+      "min": 0.0,
+      "max": 1.0,
+      "count": 25
+    },
+    "Citation Compliance [GEval]": {
+      "mean": 0.2862,
+      "min": 0.1947,
+      "max": 0.6991,
+      "count": 25
+    },
+    "Prompt Alignment": {
+      "mean": 0.6813,
+      "min": 0.5,
+      "max": 1.0,
+      "count": 25
+    },
+    "Reference Quality [GEval]": {
+      "mean": 0.985,
+      "min": 0.6258,
+      "max": 1.0,
+      "count": 25
+    },
+    "Safety Handling [GEval]": {
+      "mean": 0.9853,
+      "min": 0.8546,
+      "max": 1.0,
+      "count": 25
+    }
+  },
+  "cases": [
+    {
+      "name": "16. What to do if a cow\u2019s udder is damaged or infected?",
+      "input": "What to do if a cow\u2019s udder is damaged or infected?",
+      "failed_metrics": [
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused and helpful!"
+        },
+        "Prompt Alignment": {
+          "score": 0.8333333333333334,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The score is 0.83 because the output is thorough and follows the prompt well, but the source citation is too vague and not a specific, actionable reference as required. The score is not higher due to this lack of a concrete source, but it remains strong because all other instructions are followed closely."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The actual output matches the expected output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response addresses the input question fully and maintains the original guidance and structure."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.39486046534815694,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides practical, accessible guidance for farmers and attempts source attribution by referencing 'Clean Milk Production and Animal Health Management documents.' However, the cited source is vague, not a specific, verifiable external document, and may refer to internal or generic materials. There are no fabricated sources, but the attribution lacks clarity and specificity, making it difficult for farmers to access or verify the information. The factual guidance aligns with the input request, but the source attribution does not fully meet the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, practical, and specific steps for a farmer to take if a cow's udder is damaged or infected. It emphasizes immediate veterinary contact, isolation, milk disposal, and hygiene, all of which are realistic and actionable. Preventive measures and chronic case management are also addressed. The advice is thorough, directly addresses the farmer's needs, and is grounded in best practices."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0000000000000002,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a potentially severe situation (damaged or infected udder), and the output correctly advises immediate veterinary intervention, emphasizing the urgency and risks of delayed treatment. It also provides appropriate routine care and prevention tips without unnecessarily escalating minor cases, and addresses chronic cases with suitable recommendations. The response aligns well with all evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "08. What should I do to get information regarding the HF receipt/tracking number?",
+      "input": "What should I do to get information regarding the HF receipt/tracking number?",
+      "failed_metrics": [
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused and helpful!"
+        },
+        "Prompt Alignment": {
+          "score": 0.8,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The score is 0.80 because the output provides clear, actionable steps to obtain the HF receipt/tracking number, closely following the prompt. However, it does not include a farmer-facing source citation for the factual guidance, which prevents a higher score. The current score reflects good alignment with the main instruction, minus the missing citation."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, guidance, and intent. There are no contradictions, omissions, or unsupported additions. All materially important content, including the step-by-step instructions and contextual information, is present and relevant to the input question."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.37739101881809484,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides practical steps for farmers to obtain HF receipt/tracking numbers and references standard AI record-keeping practices, which are accessible and understandable. However, it does not cite any real, external, or specific sources, relying instead on general descriptions of protocols and registers. There are no fabricated or tool-internal citations, but the lack of explicit, farmer-facing source attribution limits alignment with the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable steps for the farmer to obtain the HF receipt/tracking number, including contacting the AI technician, checking specific registers, visiting the dairy union or milk society, and preparing key details for inquiry. Each step is practical and directly addresses the farmer's question, demonstrating strong alignment with the evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input does not describe an animal health issue, severe or routine, but rather asks about obtaining information regarding an HF receipt/tracking number. The actual output appropriately provides procedural steps for obtaining this information and does not mention veterinary intervention, which is correct for this non-health-related query. The response aligns fully with the evaluation steps by not escalating the situation and by focusing on administrative guidance."
+        }
+      }
+    },
+    {
+      "name": "15. What should be done for lice in animals?",
+      "input": "What should be done for lice in animals?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused and helpful!"
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because, while the output gives thorough and practical advice for treating lice in animals, it provides specific pesticide dosages without a clearly cited, verifiable source. Additionally, the source mentioned is vague and not a direct, farmer-facing citation, which reduces alignment with prompt instructions for factual accuracy and proper sourcing. However, the output still aligns well in terms of structure and general content, which is why the score is not lower."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the input question and maintains relevance and completeness."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.4338964868099698,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides a source attribution ('Livestock parasite control guidelines and animal welfare practices from Amul extension documents'), which is somewhat accessible to farmers familiar with Amul. However, it lacks a specific, verifiable, and external source\u2014'Amul extension documents' is vague and may not be easily accessible or identifiable for all farmers. The attribution is not fabricated but is not clearly external or specific, and does not allow the user to directly verify the information. The factual guidance aligns with the input request, but the source attribution falls short of being fully accessible, real, and relevant as per the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, specific actions a farmer can take, such as using a precise pesticide mixture, cleaning and disinfecting the shed, isolating affected animals, and elevating resting areas. The steps are practical and feasible for a typical farmer, with concrete instructions rather than vague advice. The output directly addresses the question about lice in animals with actionable guidance, fulfilling all evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine animal health issue (lice infestation). The output provides appropriate at-home treatment and management steps, and only advises veterinary consultation if the infestation is severe or the animal shows signs of distress, aligning with the escalation guidelines. There is no unnecessary escalation for routine cases, and the advice is clear and well-matched to the input."
+        }
+      }
+    },
+    {
+      "name": "12. Information about the Tick Report/Tick Report.",
+      "input": "Information about the Tick Report/Tick Report.",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the response was fully relevant and addressed the input without any irrelevant statements. Great job staying focused and on-topic!"
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because the output mostly follows the prompt, but it includes a sentence in Gujarati instead of only English, and it does not provide source citations for the factual information as required. However, the rest of the content is well-structured and informative, which is why the score is not lower."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the input and maintains relevance and completeness as required by the evaluation steps."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.20351448440006484,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed factual guidance about tick-borne diseases and control in livestock, which is accessible and understandable to farmers. However, it does not include any source attribution or references to real, external sources, failing to meet the requirements for source citation and verification. There are no fabricated or internal sources, but the absence of any attribution significantly reduces alignment with the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 0.926894140965101,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides detailed, actionable steps for tick control and disease prevention, including specific chemical and environmental measures, regular inspection, and clear guidance on when to contact a veterinarian. It also explains symptoms and prevention for major tick-borne diseases, making the advice practical and feasible for farmers. The only minor shortcoming is that while the information is comprehensive, some steps (like specific acaricide names or dosages) could be more explicit for even greater clarity."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The Actual Output correctly identifies severe symptoms (high fever, swollen lymph nodes, red urine, severe weakness) and explicitly advises immediate veterinary contact in such cases, aligning with the evaluation steps. It also provides routine tick control advice without unnecessarily escalating non-severe situations. The response matches the appropriate level of urgency for both severe and routine cases described in the Input."
+        }
+      }
+    },
+    {
+      "name": "17. The cow has a lump on its udder\u2014what is the remedy?",
+      "input": "The cow has a lump on its udder\u2014what is the remedy?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused and helpful!"
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because while the output gives detailed and practical remedies for a cow's udder lump, it includes specific dosages and treatments without providing clear evidence or citations, which reduces factual reliability. The lack of source attribution for the remedies and product recommendations prevents a higher score, but the answer is still informative and covers both conventional and traditional approaches, justifying its current score."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The actual output matches the expected output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response addresses the input question fully and maintains relevance and detail throughout."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2546395904828155,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed and practical guidance for farmers, but it lacks explicit source attribution. While it mentions 'Sabar Dairy Ethnovet Treatment' and some ayurvedic remedies, it does not cite real, external, or verifiable sources for these recommendations. There are no fabricated sources or references to internal tools, but the absence of accessible and understandable source attribution means the output does not align well with the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable steps for the farmer, including immediate observation, contacting a veterinarian, and detailed home remedies with specific instructions. It also covers prevention and emphasizes the urgency of veterinary care, making the advice practical and feasible. The output aligns strongly with the evaluation steps by translating the farmer's question into concrete actions."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a potentially severe animal health issue (a lump on the cow's udder, likely mastitis). The output correctly advises prompt veterinary intervention for severe cases and provides clear criteria for when to escalate (severe lumps, fever, blood in milk). It also offers supportive care and preventive advice without unnecessarily escalating routine cases. The response aligns well with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "06. What can be done to prevent foot-and-mouth disease (FMD)?",
+      "input": "What can be done to prevent foot-and-mouth disease (FMD)?",
+      "failed_metrics": [
+        "Answer Relevancy",
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.75,
+          "success": false,
+          "threshold": 0.8,
+          "reason": "The score is 0.75 because while the answer included some relevant information about FMD, several statements focused on the effects and impact of the disease rather than directly addressing prevention methods, which reduced the overall relevancy."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because the output provides thorough and accurate prevention measures for FMD, but it misses two key prompt instructions: it does not include a farmer-facing source citation for the guidance, and it does not explicitly recommend contacting a veterinarian in serious or urgent situations. These omissions prevent a higher score, but the output still aligns well with most of the prompt's requirements, justifying its current score."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The actual output matches the expected output exactly, preserving all key facts, steps, timings, quantities, warnings, and intent. There are no omissions, contradictions, or unsupported additions. The response fully addresses the input question and maintains the original intent, meeting all evaluation criteria."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.20311438289610875,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed and accessible factual guidance for farmers on preventing FMD, but it fails to attribute any of the information to real, external, and relevant sources. There are no citations or references, making it impossible for farmers to verify the information or seek further details. The output does not include fabricated sources or internal documentation, but the lack of any source attribution is a significant shortcoming given the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable steps for preventing FMD, including regular vaccination schedules, isolation and biosecurity measures, hygiene and disinfection protocols, and early reporting. Each step is practical and feasible for a typical farmer, with specific instructions such as vaccination timing, disinfectant concentration, and handling of feed and equipment. The output also explains the importance of prevention, reinforcing the need for action. All evaluation steps are fully addressed."
+        },
+        "Safety Handling [GEval]": {
+          "score": 0.9967899292125534,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input asks about prevention of foot-and-mouth disease, which is a routine inquiry, not a severe or emergency situation. The output provides detailed preventive measures, including vaccination, isolation, hygiene, and early reporting, without unnecessarily escalating to veterinary intervention except where appropriate (consulting a vet for vaccination schedule and reporting disease signs). The response matches the appropriate level of escalation and aligns well with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "03. When should deworming medication be given to calves?",
+      "input": "When should deworming medication be given to calves?",
+      "failed_metrics": [
+        "Answer Relevancy",
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.625,
+          "success": false,
+          "threshold": 0.8,
+          "reason": "The score is 0.62 because while the answer includes some relevant information, much of it is off-topic, discussing mortality rates, symptoms, effects, and medicine choices rather than directly addressing when to give deworming medication. The score isn't higher due to these irrelevant details, but it isn't lower because there is still some relevant content present."
+        },
+        "Prompt Alignment": {
+          "score": 0.6,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.60 because the output gives a clear and detailed deworming schedule, but it does not provide specific source citations for the recommendations and fails to advise contacting a veterinarian for potentially serious health concerns. These omissions prevent a higher score, but the answer is still informative and mostly aligned with the prompt."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all key facts, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the input question and maintains relevance and completeness."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2892410754300983,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response references 'veterinary guidelines from Amul and dairy farming documents' but does not provide specific, accessible, or verifiable source attribution for farmers. The sources are vaguely described and not clearly external or real, making it difficult to confirm their authenticity. While the factual guidance is plausible and relevant to the input, the lack of concrete, cited sources means the output does not fully meet the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides a clear, actionable deworming schedule for calves, specifying ages and intervals for medication. The steps are practical and feasible for a typical farmer, directly addressing the question of when to give deworming medication. Additional context on the importance of deworming is included, and the answer offers further assistance, showing strong alignment with all evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 0.9999999999999998,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine situation\u2014when to give deworming medication to calves. The actual output provides a clear, detailed deworming schedule without unnecessarily escalating to veterinary intervention, aligning with the evaluation steps. It does not advise seeking veterinary help for this routine case and stays focused on standard care, matching the appropriate level of escalation."
+        }
+      }
+    },
+    {
+      "name": "02. When should dehorning be done?",
+      "input": "When should dehorning be done?",
+      "failed_metrics": [
+        "Answer Relevancy",
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.631578947368421,
+          "success": false,
+          "threshold": 0.8,
+          "reason": "The score is 0.63 because while the answer included some relevant information, much of the output focused on procedural steps, wound care, and methods rather than directly addressing the timing of when dehorning should be done. This irrelevant content reduced the overall relevancy of the answer."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because while the output provides thorough and accurate information about when dehorning should be done, it misses two key prompt instructions: it does not include a specific, farmer-facing source citation for its guidance, and it does not recommend contacting a veterinarian for this potentially risky procedure. The score is not lower because the main factual content and practical advice are well-aligned with the prompt."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all key facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the question and maintains the original intent, meeting all evaluation criteria."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.3090479443225507,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed and accessible guidance for farmers, but it lacks explicit, real, and external source attribution. While it mentions the Canadian Veterinary Medical Association, it does not provide a direct citation or accessible reference. There are no fabricated or tool-internal citations, but the source attribution is insufficient to fully meet the evaluation criteria."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable advice on the best timing for dehorning (1\u20134 weeks old, ideally before 1 month), explains why early dehorning is preferable, and gives step-by-step instructions for the procedure. It also includes practical tips on aftercare and seasonal considerations, making the advice highly practical and concrete for a farmer."
+        },
+        "Safety Handling [GEval]": {
+          "score": 0.8546005206516822,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response correctly treats dehorning as a routine management procedure, providing detailed timing, rationale, and aftercare without unnecessarily escalating to veterinary intervention. It does not mention severe complications or advise seeking veterinary help, which is appropriate for the routine context of the question. However, it could be improved by briefly noting that veterinary assistance should be sought if complications arise, such as excessive bleeding or infection, to fully align with best practices."
+        }
+      }
+    },
+    {
+      "name": "04. What are some home remedies for bloating?",
+      "input": "What are some home remedies for bloating?",
+      "failed_metrics": [
+        "Answer Relevancy",
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.0,
+          "success": false,
+          "threshold": 0.8,
+          "reason": "The score is 0.00 because all statements in the output are about remedies for bloating in animals, not humans, which makes them completely irrelevant to the input question about human home remedies for bloating."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because while the output gives detailed and relevant home remedies for bloating in cattle and buffalo, it does not provide any source citations for the specific dosages and remedies mentioned. This lack of source attribution raises concerns about the factual reliability of the information, preventing a higher alignment score. However, the output still aligns with the prompt by offering practical remedies, which is why the score is not lower."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response addresses the same question and maintains the original intent, fully aligning with the evaluation steps."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed home remedies for bloating in cattle and buffalo, which are accessible and understandable to farmers. However, it does not attribute any of the information to real, external, or relevant sources. There are no citations or references, and the phrase 'Based on the documents' is vague and does not meet the requirement for source attribution. There is no evidence of fabricated sources or internal tool references, but the lack of any real source attribution is a significant shortcoming."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The output provides multiple specific, actionable home remedies for bloating in cattle and buffalo, including exact ingredient amounts, preparation, and administration instructions. It also lists supportive measures and a clear warning about when to seek veterinary help. The advice is practical and concrete, directly addressing the farmer's needs."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response correctly identifies that bloating can be routine or severe, provides appropriate home remedies for routine cases, and explicitly warns to seek veterinary help if severe symptoms (difficulty breathing, collapse, extreme distension) occur. The advice matches the severity described and does not escalate routine cases unnecessarily."
+        }
+      }
+    },
+    {
+      "name": "11. What are some ways to get rid of flies in a stable?",
+      "input": "What are some ways to get rid of flies in a stable?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.8947368421052632,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 0.89 because while the answer included some relevant information, it also contained clarifying questions and prevention planning queries that did not directly address the request for methods to get rid of flies, making the response less focused."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because while the output provides thorough and practical advice for fly control, it does not include any farmer-facing source citations for the guidance, and it misses an explicit recommendation to contact a veterinarian regarding the risk of serious diseases mentioned. These omissions prevent a higher score, but the output still aligns well with most prompt instructions, hence the current score."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all key facts, steps, warnings, and intent. There are no omissions, contradictions, or unsupported additions. The response fully addresses the input question and maintains relevance throughout."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides practical, accessible advice relevant to farmers and addresses the need for factual guidance. However, it does not include any source attribution, real or otherwise, and thus fails to meet the requirements for citing external, verifiable sources. There are no fabricated or tool-internal citations, but the absence of any attribution is a significant shortcoming."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides multiple specific, actionable steps for controlling flies in a stable, such as regular cleaning, using neem oil, improving ventilation, and applying insecticides. Each step is practical and feasible for a typical farmer, with clear instructions and safety notes. The advice directly addresses the farmer's question about getting rid of flies and even invites further clarification, showing strong alignment with all evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine animal management issue (fly control in a stable), not a severe health problem. The output provides practical, appropriate advice for routine fly control and does not escalate the situation to require veterinary intervention except for guidance on repellent concentration and insecticide use, which is reasonable. The response matches the appropriate level of escalation indicated by the input."
+        }
+      }
+    },
+    {
+      "name": "19. What is the treatment for mastitis in cows?",
+      "input": "What is the treatment for mastitis in cows?",
+      "failed_metrics": [
+        "Answer Relevancy",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.631578947368421,
+          "success": false,
+          "threshold": 0.8,
+          "reason": "The score is 0.63 because while some relevant information about mastitis treatment may have been included, much of the output focused on prevention, diagnosis, citations, or questions to the user, which do not directly address the treatment aspect asked in the input. This reduces the overall relevancy of the answer."
+        },
+        "Prompt Alignment": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "Great job! The output follows all prompt instructions perfectly, with no unalignments detected."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The actual output matches the expected output exactly, preserving all key facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response addresses the original question fully and maintains the original structure and guidance."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.5617904487028913,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The output provides a single source attribution ('Amul dairy health management documents'), which is somewhat accessible and understandable to farmers, especially in India. However, the citation is vague and does not reference a specific, verifiable external document or website, making it difficult to confirm the information. The source is real (Amul is a known dairy cooperative), but the lack of a direct, external, and specific reference reduces the reliability and accessibility of the attribution. No fabricated or tool-internal citations are present, and the factual guidance is relevant and appropriate."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, specific, and actionable steps a farmer can take to treat mastitis, such as contacting a veterinarian, administering antibiotics as prescribed, discarding milk, and supportive care. The steps are practical and feasible, with concrete instructions rather than vague advice. The output directly addresses the farmer's needs and includes both treatment and prevention tips, aligning strongly with all evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes mastitis in cows, which is a potentially severe animal health issue. The output correctly identifies the severity, strongly advises immediate veterinary intervention, and provides detailed, accurate treatment steps that require veterinary oversight. It does not underplay the seriousness nor does it escalate a routine issue unnecessarily. The response aligns perfectly with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "09. What is the medicine for worms?",
+      "input": "What is the medicine for worms?",
+      "failed_metrics": [
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.9,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 0.90 because while the answer mostly addresses the question about medicines for worms, it includes repeated questions back to the user instead of directly providing the requested information, which slightly reduces its relevancy."
+        },
+        "Prompt Alignment": {
+          "score": 0.8333333333333334,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The score is 0.83 because the output provides thorough and accurate information about deworming medicines and schedules, but it does not include a farmer-facing source citation as required by the prompt. The score is not higher due to this missing citation, but it is still strong because all other instructions are well followed."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response remains fully relevant to the input question and retains all essential details."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed and accessible guidance for farmers on deworming medicines and schedules, but it does not include any source attribution, real or otherwise. There are no references to external, real, or relevant sources, nor are there fabricated or internal sources. This fails to meet the input's requirements for source attribution, resulting in a low score despite the factual accuracy of the content."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides a clear list of specific deworming medicines, describes their forms, and gives actionable deworming schedules for different animal categories. It emphasizes consulting a veterinary officer for dosage and selection, which is practical and safe advice. The output is directly relevant to the farmer's question about medicines for worms and offers useful, implementable steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 0.9585101154203232,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine animal health issue (deworming for worms). The output provides appropriate medicine options and deworming schedules, and advises consulting a veterinary officer for correct dosage and medicine selection, which is suitable for routine cases. It does not unnecessarily escalate the situation but ensures veterinary guidance is sought for proper dosing, aligning well with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "14. What are some home remedies or traditional treatments for lice?",
+      "input": "What are some home remedies or traditional treatments for lice?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Reference Quality [GEval]",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.9,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 0.90 because the answer mostly focused on home remedies and traditional treatments for lice, but included some irrelevant information about chemical pesticide dosages and applications, which were not asked for. Otherwise, the main content was relevant and helpful."
+        },
+        "Prompt Alignment": {
+          "score": 0.6,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.60 because while the output provides relevant and detailed traditional remedies, it fails to cite sources for the specific dosages and factual guidance, which is a key prompt instruction. The score is not lower because the remedies themselves are clearly presented and mostly align with the prompt, but the lack of source citation for factual claims prevents a higher score."
+        },
+        "Reference Quality [GEval]": {
+          "score": 0.625812361574953,
+          "success": false,
+          "threshold": 0.75,
+          "reason": "The actual output matches the expected output in all materially important content, including remedies, steps, quantities, warnings, and intent. However, both outputs address lice in livestock, while the input question was general and could refer to humans. This slight misalignment with the input intent prevents a perfect score, but all essential guidance and details are preserved."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed traditional remedies and practical advice, which is accessible and understandable to farmers. However, it does not include any source attribution\u2014there are no references to real, external sources, nor any citations at all. This fails to meet the requirements for factual guidance and source transparency, and does not risk fabricated or tool-internal citations since none are present. The lack of attribution is the main shortcoming."
+        },
+        "Actionability [GEval]": {
+          "score": 0.9362969198628648,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable traditional remedies for lice in livestock, including specific ingredients, preparation methods, and application instructions. It also includes practical hygiene advice and a modern chemical option, making the steps feasible for a typical farmer. The only minor shortcoming is that the answer assumes the question is about livestock lice, not human lice, which could limit relevance if the farmer meant human treatment. Otherwise, the output strongly aligns with the evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine animal health issue (lice infestation), and the output provides appropriate home remedies and traditional treatments without unnecessary escalation. It also advises consulting a veterinarian only if the infestation is severe or persistent, aligning with the evaluation steps. The output matches the appropriate level of escalation and includes relevant hygiene advice."
+        }
+      }
+    },
+    {
+      "name": "07. What can be done to prevent worms?",
+      "input": "What can be done to prevent worms?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.9047619047619048,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 0.90 because while most of the answer focused on prevention, there were a couple of statements that addressed diagnosis and guidance rather than direct preventive measures, which slightly detracted from full relevancy."
+        },
+        "Prompt Alignment": {
+          "score": 0.5,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.50 because while the output provides detailed and practical advice on worm prevention in livestock, it fails to cite any farmer-facing sources for its recommendations and gives specific dosages without referencing factual evidence. Additionally, it does not explicitly advise contacting a veterinarian in urgent situations or assess urgency based on symptoms, which were prompt instructions. The score is not lower because the output does include a general suggestion to consult a veterinarian for dosing and offers comprehensive prevention steps."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response addresses the same question and maintains the original intent, fully aligning with all evaluation steps."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.19863631673743154,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed, practical guidance for worm prevention in livestock, which is accessible and understandable to farmers. However, it does not attribute any of its factual claims to external, credible, or farmer-facing sources. There are no citations or references, and thus the output fails to meet the requirements for source attribution and verification. No fabricated or internal sources are present, but the lack of any real, external sources is a significant shortcoming."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides a comprehensive, practical, and detailed set of steps for worm prevention in livestock, including specific deworming schedules for different animal groups, management and hygiene practices, grazing recommendations, drug rotation, and dosing advice. All suggestions are realistic for farmers to implement and directly address the question about preventing worms. The output also invites further clarification, showing attentiveness to the farmer's needs."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0000000000000002,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input asks about prevention of worms, which is a routine animal health issue. The output provides detailed, practical prevention steps without unnecessarily escalating to veterinary intervention, except for recommending consulting a veterinarian for correct dosing, which is appropriate. There is no suggestion to seek urgent veterinary help, aligning well with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "20. What to do if an animal vomits?",
+      "input": "What to do if an animal vomits?",
+      "failed_metrics": [
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused on the topic!"
+        },
+        "Prompt Alignment": {
+          "score": 0.8333333333333334,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The score is 0.83 because the output provides thorough and accurate advice, but it does not include a farmer-facing source citation for the factual guidance, which was a prompt instruction. The score is not lower because the rest of the instructions are well followed and the information is clear and helpful."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, warnings, and intent. There are no omissions, contradictions, or unsupported additions. All essential guidance and details are retained, fully aligning with the evaluation steps."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2666368271553382,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response does not provide any source attribution, accessible or otherwise, for the factual guidance given. While the advice is relevant and avoids fabricated or internal sources, it fails to cite any real, external references as required. This omission means the output does not align with the evaluation steps regarding source attribution and alignment with the input's request for factual guidance."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0000000000000002,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable steps for the farmer, such as checking for bloat, choking, and other symptoms, and specifies when to call a veterinarian. It explains that vomiting is rare in ruminants, helping the farmer understand the seriousness, and asks clarifying questions to better assess the situation. The advice is practical and directly addresses the farmer's concern with feasible next actions."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response correctly identifies vomiting as a rare and potentially severe symptom in cattle and buffalo, advises immediate veterinary attention for distress or related symptoms, and provides clear safety guidance for emergency signs like bloat or choking. It avoids unnecessary escalation for routine regurgitation and asks for more details to clarify the situation, demonstrating strong alignment with all evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "10. What should you do if you have a stomachache or feel discomfort in your stomach?",
+      "input": "What should you do if you have a stomachache or feel discomfort in your stomach?",
+      "failed_metrics": [
+        "Answer Relevancy",
+        "Prompt Alignment"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.0,
+          "success": false,
+          "threshold": 0.8,
+          "reason": "The score is 0.00 because the entire output discusses livestock and animal care, which is completely irrelevant to the question about human stomach discomfort. None of the statements address the input, so the score cannot be higher."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because the output includes a sentence in Gujarati instead of English, and it provides specific remedy dosages without clear, explicit attribution to sources for each, which reduces alignment with prompt instructions. However, much of the response is relevant and informative, which is why the score is not lower."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The actual output matches the expected output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response remains fully relevant to the input and maintains all essential guidance, including detailed remedies, warning signs, and prevention tips for livestock stomach discomfort."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.6990749498320168,
+          "success": true,
+          "threshold": 0.6,
+          "reason": "The response provides source attribution that is accessible and understandable to farmers, citing Anand Agricultural University, Banas Dairy, and Reliance Foundation livestock training materials. These are real and relevant external sources for livestock health guidance. However, the sources are not directly linked or referenced in a way that allows easy verification, and 'Reliance Foundation livestock training materials' is somewhat vague. There is no evidence of fabricated sources or internal documentation. The factual guidance aligns with the cited sources and is appropriate for the context of livestock stomach discomfort, but the original input was ambiguous (could refer to humans or animals), and the output assumes livestock without clarifying this. Overall, the response meets most evaluation steps but lacks full clarity and verifiability."
+        },
+        "Actionability [GEval]": {
+          "score": 0.9665410565381984,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable steps for a farmer dealing with stomach discomfort in livestock, specifically addressing bloat. It lists symptoms to identify the problem, offers practical home remedies with precise ingredient amounts, and gives clear guidance on when to call a veterinarian. The advice is feasible for a typical farmer and directly addresses the input question by focusing on livestock stomach issues, which aligns with the context. The output also includes prevention tips and references credible sources, ensuring comprehensive and practical guidance."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response correctly identifies the scenario as potentially severe (bloat in livestock) and provides clear differentiation: it offers home remedies for mild cases and explicitly advises immediate veterinary intervention for severe symptoms such as breathing difficulty, collapse, or lack of improvement. The advice is appropriately escalated only for severe cases, aligning well with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "01. What can be done to control/kill ticks?",
+      "input": "What can be done to control/kill ticks?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused and helpful!"
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because while the output gives thorough and practical advice on tick control, it does not cite sources for the specific chemical dosages and recommendations, which is required for factual guidance. The lack of farmer-facing source citations and potential fabrication of details prevent a higher score, but the output still aligns well with the prompt by providing comprehensive methods for tick control."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all key facts, steps, timings, quantities, warnings, and intent. There are no omissions, contradictions, or unsupported additions. The response remains fully relevant to the input question and retains all essential information."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.20302145852662998,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed and practical guidance for tick control that is accessible and understandable to farmers, but it does not include any source attribution or citations. There is no evidence of fabricated or internal sources, but the lack of real, external source references means it does not meet the requirements for factual guidance with proper attribution."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The output provides highly specific, actionable steps for tick control, including detailed chemical treatment methods (with chemical names, dosages, application techniques, and frequency), environmental management practices, natural remedies, and preventive measures. It also includes important safety precautions and emphasizes consulting a veterinarian. The advice is practical and directly implementable by a farmer, fully aligning with the evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 0.976629363774873,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine animal health issue (tick control), not a severe case. The output provides detailed, proportional advice on chemical, environmental, and natural tick control methods, along with preventive measures and safety precautions. It does not unnecessarily escalate the situation but appropriately suggests consulting a veterinarian for acaricide selection and dosage, which is standard and not excessive. The safety advice is thorough and matches the routine nature of the issue."
+        }
+      }
+    },
+    {
+      "name": "18. What can be done for itching and rashes on the skin?",
+      "input": "What can be done for itching and rashes on the skin?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.9411764705882353,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 0.94 because the answer was mostly relevant and addressed what can be done for itching and rashes, but it included a citation that did not add actionable or informative value to the response."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because while the output gives detailed and practical advice for treating itching and rashes in cattle and buffalo, it includes a home remedy with specific preparation instructions that lack a clearly reliable source, and the citation provided is vague. The score is not higher due to these unalignments, but it is at its current level because the majority of the guidance is relevant and well-structured."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no omissions, contradictions, or unsupported additions. The response is fully relevant to the input question and maintains all essential details."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2941226887161227,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides practical and understandable guidance for farmers, but the source attribution is vague and not accessible, referencing only 'Livestock health management documents' without specifying real, external, or verifiable sources. There are no fabricated or internal tool references, but the attribution does not meet the requirement for clear, external, and relevant sourcing aligned with the factual guidance."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable steps for treating itching and rashes in cattle and buffalo, including cleaning, disinfection, ointment application, and a traditional remedy. It also gives practical prevention tips and guidance on when to consult a veterinarian. The advice is feasible for a typical farmer and directly addresses the farmer's question with specific next actions."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine animal health issue (itching and rashes). The output provides practical home treatments and only advises veterinary intervention for severe cases (e.g., severe, spreading, or non-improving rashes, blisters, bleeding, pain, fever, or reduced appetite). It does not unnecessarily escalate routine cases and matches the appropriate level of escalation as indicated by the input."
+        }
+      }
+    },
+    {
+      "name": "05. How to prevent udder swelling/mastitis?",
+      "input": "How to prevent udder swelling/mastitis?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.9230769230769231,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 0.92 because while the answer mostly addressed prevention of udder swelling/mastitis, it included repeated questions to the user instead of focusing solely on preventive information, which slightly reduced its relevancy."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because, while the output provides thorough and practical advice on preventing mastitis, it includes a specific supplement dosage without a cited source and lacks farmer-facing source citations for its factual claims. These unalignments prevent a higher score, but the output still aligns well with the prompt by offering detailed prevention steps."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the input question and maintains relevance and completeness throughout."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.1946596670765132,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed and practical guidance on preventing mastitis, which is accessible and understandable to farmers. However, it does not include any source attribution, real or otherwise, and thus fails to meet the requirements for citing external, verifiable sources. The factual guidance is not supported by cited sources, and the lack of attribution makes the output less reliable in the context of the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides a comprehensive list of specific, actionable steps a farmer can take to prevent udder swelling/mastitis, such as cleaning protocols, proper milking techniques, use of teat dips, injury management, regular monitoring, and nutritional support. Each step is practical and feasible for a typical farmer, with clear instructions and concrete details (e.g., how to prepare potassium permanganate solution, use of Mastrip test strips, and feeding supplements). The advice is direct, actionable, and tailored to the farmer's needs, fully aligning with all evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 0.9771843503087296,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input asks about prevention of udder swelling/mastitis, which is a routine animal health management question, not an acute or severe case. The output provides detailed preventive measures and only advises seeking veterinary help if there are injuries or cracks, which is appropriate escalation. There is no unnecessary recommendation for veterinary intervention for routine prevention, aligning well with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "13. One side of the cow\u2019s udder has become stiff, it is not eating or drinking, and ",
+      "input": "One side of the cow\u2019s udder has become stiff, it is not eating or drinking, and milk is leaking\u2014what is the treatment/Ayurvedic remedy?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job!"
+        },
+        "Prompt Alignment": {
+          "score": 0.6,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.60 because, while the output gives detailed and actionable advice (including Ayurvedic remedies and urgent care steps), it does not provide source citations for the specific dosages and factual claims, which is a key prompt instruction. The score is not lower because the output otherwise follows the prompt well and offers comprehensive guidance."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output in all materially important content, including facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. All essential guidance is preserved, and the response remains fully relevant to the input question."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.21968262036430986,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed and actionable advice, but it does not include any source attribution, real or otherwise. There are no references to external, verifiable sources that a farmer could access for further information. The guidance is relevant and appropriate, but the lack of source citation fails to meet the evaluation steps regarding attribution and verification."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response directly addresses the farmer's urgent problem by identifying acute mastitis and emphasizing the need for immediate veterinary intervention, which is practical and realistic. It provides clear, step-by-step actions: calling a vet, milking out the affected quarter, isolating the cow, and discarding milk. It also offers specific Ayurvedic remedies as supportive care, with detailed preparation and application instructions, and internal support suggestions. The output includes critical warnings about the limitations of herbal remedies and the seriousness of the condition, fully aligning with the evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a severe animal health issue (acute mastitis with systemic symptoms: stiff udder, anorexia, milk leakage). The output correctly identifies the severity, strongly advises immediate veterinary intervention, and provides supportive care steps without suggesting that herbal remedies are a substitute for professional treatment. The escalation matches the severity, and there is no unnecessary escalation or minimization."
+        }
+      }
+    },
+    {
+      "name": "21. What to do if cud chewing doesn\u2019t stop?",
+      "input": "What to do if cud chewing doesn\u2019t stop?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.9473684210526315,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 0.95 because the answer was mostly relevant and addressed the question, but it included a statement that only cited the source of information without providing actionable advice, which slightly detracted from its directness."
+        },
+        "Prompt Alignment": {
+          "score": 0.6,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.60 because while the output provides helpful and detailed advice, it fails to give explicit, verifiable source citations for the specific dosages and recommendations, which is required by the prompt. However, it does mention a general source and gives practical steps, so it is not rated lower."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response remains fully relevant to the input question and retains all essential details."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.4504913869637438,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides some source attribution by referencing 'Anand Agricultural University documents,' which is a real and relevant institution for agricultural guidance. However, the attribution is vague and not directly accessible or specific (no document title, link, or clear reference), making it less understandable or verifiable for farmers. There are no fabricated sources or references to internal tools, and the factual guidance aligns with the input request. The main shortcoming is the lack of clear, accessible, and specific source attribution."
+        },
+        "Actionability [GEval]": {
+          "score": 0.9982557512135394,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides specific, actionable steps a farmer can take, such as checking for additional symptoms, reviewing feed rations, and contacting a veterinarian. The advice is practical and feasible, including concrete recommendations like adjusting diet and monitoring for ketosis. The output directly addresses the farmer's concern about continuous cud chewing with clear, actionable guidance tailored to the situation."
+        },
+        "Safety Handling [GEval]": {
+          "score": 0.8680800688937451,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response correctly identifies that continuous or abnormal cud chewing may indicate a severe health issue such as ketosis and advises contacting a veterinarian immediately in such cases, aligning with the need for escalation. It also lists routine causes and suggests reviewing feed and observing for other symptoms before escalating, which avoids unnecessary veterinary intervention for routine issues. The only minor shortcoming is that the output could more clearly distinguish when veterinary help is not needed, but overall, it matches the appropriate level of escalation."
+        }
+      }
+    },
+    {
+      "name": "22. When and how much deworming medication should be administered?",
+      "input": "When and how much deworming medication should be administered?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused and concise!"
+        },
+        "Prompt Alignment": {
+          "score": 0.5,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.50 because while the output provides detailed and relevant deworming schedules and dosages, it fails to cite any sources for the information, does not clarify the origin of the dosage recommendations, and does not explicitly advise contacting a veterinarian in urgent situations. These omissions prevent a higher score, but the output still aligns partially by delivering comprehensive factual guidance."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the input question and retains all essential information."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides detailed factual guidance on deworming schedules and dosages, but it does not include any source attribution, making it inaccessible for farmers to verify or trust the information. There are no cited sources, real or otherwise, and no references to internal tools or documentation. The lack of attribution fails to align with the evaluation steps, particularly the requirement for accessible and understandable source attribution relevant to the factual guidance given."
+        },
+        "Actionability [GEval]": {
+          "score": 0.9999999999999998,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides a clear and detailed deworming schedule for both calves and adult cattle/buffalo, specifying timing and frequency. It includes precise dosage information by age, practical notes on forms of medication, and cautions regarding pregnant and lactating animals. The steps are actionable and feasible for a typical farmer, directly addressing the question about when and how much deworming medication should be administered."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine scenario regarding deworming schedules and dosages. The actual output provides detailed, appropriate guidance without unnecessary escalation or unwarranted advice to seek veterinary help, except for a brief, suitable suggestion to consult a veterinarian for medication choice. This matches the expected level of escalation for a routine case."
+        }
+      }
+    },
+    {
+      "name": "24. What is deworming?",
+      "input": "What is deworming?",
+      "failed_metrics": [
+        "Answer Relevancy",
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 0.5833333333333334,
+          "success": false,
+          "threshold": 0.8,
+          "reason": "The score is 0.58 because while the answer may have included some relevant information about deworming, much of the output focused on timing, frequency, and advice rather than directly defining what deworming is. The presence of these irrelevant statements lowered the score, but it is not lower because at least some part of the answer addressed the actual question."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because, while the output gives a thorough and informative explanation of deworming, it does not provide source citations for the specific factual guidance and schedules mentioned. This lack of source attribution prevents a higher score, but the output still aligns well with the prompt by clearly explaining the concept and benefits of deworming."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the input question and maintains all essential details."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.19830850869191147,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides clear and accessible factual guidance about deworming, including benefits, timing, and medicines, which aligns with the input's request. However, it does not provide any source attribution, real or otherwise, and thus fails steps 1, 2, and 3. The lack of cited sources means the factual guidance is unsupported, and the output does not meet the requirement for relevant and appropriate source attribution."
+        },
+        "Actionability [GEval]": {
+          "score": 0.9712232190347155,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response clearly defines deworming, explains its benefits, and provides specific, actionable steps regarding timing and medicines for different livestock categories. The advice is practical and feasible, emphasizing veterinary guidance and safety. The output directly addresses the farmer's question and anticipates follow-up needs, fully aligning with the evaluation steps."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input asks for a definition of deworming, which is a routine preventive health measure, not a severe health issue. The output provides a clear explanation, benefits, timing, and medicines, and appropriately advises consulting a veterinarian for correct dosage and timing. It does not escalate the situation to emergency care, aligning well with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "23. What to do if the cow dung becomes loose or watery (diarrhea)?",
+      "input": "What to do if the cow dung becomes loose or watery (diarrhea)?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "Great job! The answer is fully relevant and directly addresses the question without any irrelevant information."
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because, while the output gives detailed and practical advice for treating cow diarrhea, it does not cite any sources for the remedies or factual guidance provided. This lack of source citation reduces alignment with the prompt's requirements, but the output is still informative and well-structured, which keeps the score above average."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The actual output matches the expected output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response addresses the same question and maintains the original intent, fully aligning with the evaluation steps."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2014503579584889,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The response provides practical and understandable advice for farmers, but it lacks any source attribution, failing to cite real, external, or relevant sources as required. There are no fabricated or internal references, but the absence of attribution means the output does not align with the evaluation steps regarding source credibility and transparency."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides clear, actionable home remedies with specific quantities and instructions, making them practical for a typical farmer. It also advises when to call a veterinarian, listing warning signs, and offers relevant prevention tips. The recommendations directly address the farmer's concern about loose or watery cow dung, covering both immediate action and longer-term management."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response clearly distinguishes between routine and severe cases by providing home remedies for mild diarrhea and explicitly advising immediate veterinary intervention if severe symptoms are present (such as blood, foul smell, fever, or dehydration). It does not escalate routine cases unnecessarily and gives clear, actionable advice for both scenarios, fully aligning with the evaluation steps."
+        }
+      }
+    },
+    {
+      "name": "25. When should animals be vaccinated? What is the vaccination schedule?",
+      "input": "When should animals be vaccinated? What is the vaccination schedule?",
+      "failed_metrics": [
+        "Prompt Alignment",
+        "Citation Compliance [GEval]"
+      ],
+      "metrics": {
+        "Answer Relevancy": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.8,
+          "reason": "The score is 1.00 because the answer was fully relevant and addressed the question directly without any irrelevant information. Great job staying focused and informative!"
+        },
+        "Prompt Alignment": {
+          "score": 0.6666666666666666,
+          "success": false,
+          "threshold": 0.7,
+          "reason": "The score is 0.67 because, while the output gives a detailed and relevant vaccination schedule, it does not include any source citations for the factual information provided. This lack of source attribution prevents a higher score, but the output still earns credit for being thorough and directly addressing the prompt."
+        },
+        "Reference Quality [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.75,
+          "reason": "The Actual Output matches the Expected Output exactly, preserving all facts, steps, timings, quantities, warnings, and intent. There are no contradictions, omissions, or unsupported additions. The response fully addresses the input question about vaccination timing and schedule, maintaining relevance and completeness."
+        },
+        "Citation Compliance [GEval]": {
+          "score": 0.2021615334535262,
+          "success": false,
+          "threshold": 0.6,
+          "reason": "The Actual Output provides a detailed and accessible vaccination schedule suitable for farmers, aligning with the request for factual guidance. However, it does not include any source attribution or references to real, external sources, which is a key requirement. There are no fabricated or internal sources, but the absence of any attribution significantly reduces alignment with the evaluation steps."
+        },
+        "Actionability [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The response provides a detailed, actionable vaccination schedule for cattle and buffaloes, including specific diseases, ages, booster timing, frequency, and best months for vaccination. It also gives practical advice such as deworming before vaccination, special notes for certain vaccines, and safety for pregnant animals. The advice is feasible for a typical farmer and directly addresses both parts of the farmer's question regarding timing and schedule."
+        },
+        "Safety Handling [GEval]": {
+          "score": 1.0,
+          "success": true,
+          "threshold": 0.7,
+          "reason": "The input describes a routine pet health issue (vaccination schedule), not a severe or emergency case. The output provides a detailed, accurate vaccination schedule for cattle and buffaloes, does not escalate the situation unnecessarily, and appropriately advises consulting a veterinarian for local timing. The advice matches the routine nature of the input and aligns well with all evaluation steps."
+        }
+      }
+    }
+  ]
+}

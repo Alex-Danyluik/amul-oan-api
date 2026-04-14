@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="780" viewBox="0 0 980 780">
+<rect width="100%" height="100%" fill="#f6f3eb" />
+<text x="40" y="50" font-family="Georgia, serif" font-size="30" fill="#111827">Haiku vs Localhost Spider Chart</text>
+<text x="40" y="80" font-family="Georgia, serif" font-size="15" fill="#4b5563">Dataset: Golden Set EN QNA 2026-03-13 Haiku | Samples: 25</text>
+<text x="40" y="102" font-family="Georgia, serif" font-size="15" fill="#4b5563">Baseline: haiku-reference-20260412T163622Z | Candidate: vllm-gemma-4-31b-it-20260414T112236Z</text>
+<polygon points="305.00,373.75 345.05,396.88 345.05,443.12 305.00,466.25 264.95,443.12 264.95,396.88" fill="none" stroke="#d6d3d1" stroke-width="1" />
+<polygon points="305.00,327.50 385.11,373.75 385.11,466.25 305.00,512.50 224.89,466.25 224.89,373.75" fill="none" stroke="#d6d3d1" stroke-width="1" />
+<polygon points="305.00,281.25 425.16,350.62 425.16,489.38 305.00,558.75 184.84,489.38 184.84,350.62" fill="none" stroke="#d6d3d1" stroke-width="1" />
+<polygon points="305.00,235.00 465.21,327.50 465.21,512.50 305.00,605.00 144.79,512.50 144.79,327.50" fill="none" stroke="#d6d3d1" stroke-width="1" />
+<line x1="305" y1="420" x2="305.00" y2="235.00" stroke="#d6d3d1" stroke-width="1" />
+<text x="305.00" y="179.00" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#111827">
+  <tspan x="305.00" dy="-7">Answer</tspan>
+  <tspan x="305.00" dy="18">Relevancy</tspan>
+</text>
+<line x1="305" y1="420" x2="465.21" y2="327.50" stroke="#d6d3d1" stroke-width="1" />
+<text x="513.71" y="299.50" text-anchor="start" font-family="Georgia, serif" font-size="15" fill="#111827">
+  <tspan x="513.71" dy="-7">Prompt</tspan>
+  <tspan x="513.71" dy="18">Alignment</tspan>
+</text>
+<line x1="305" y1="420" x2="465.21" y2="512.50" stroke="#d6d3d1" stroke-width="1" />
+<text x="513.71" y="540.50" text-anchor="start" font-family="Georgia, serif" font-size="15" fill="#111827">
+  <tspan x="513.71" dy="-7">Reference</tspan>
+  <tspan x="513.71" dy="18">Quality</tspan>
+</text>
+<line x1="305" y1="420" x2="305.00" y2="605.00" stroke="#d6d3d1" stroke-width="1" />
+<text x="305.00" y="661.00" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#111827">
+  <tspan x="305.00" dy="-7">Citation</tspan>
+  <tspan x="305.00" dy="18">Compliance</tspan>
+</text>
+<line x1="305" y1="420" x2="144.79" y2="512.50" stroke="#d6d3d1" stroke-width="1" />
+<text x="96.29" y="540.50" text-anchor="end" font-family="Georgia, serif" font-size="15" fill="#111827">
+  <tspan x="96.29" dy="0">Actionability</tspan>
+</text>
+<line x1="305" y1="420" x2="144.79" y2="327.50" stroke="#d6d3d1" stroke-width="1" />
+<text x="96.29" y="299.50" text-anchor="end" font-family="Georgia, serif" font-size="15" fill="#111827">
+  <tspan x="96.29" dy="-7">Safety</tspan>
+  <tspan x="96.29" dy="18">Handling</tspan>
+</text>
+<polygon points="305.00,267.32 414.15,356.98 462.81,511.11 305.00,472.95 146.07,511.76 147.14,328.86" fill="#c96f4a33" stroke="#c96f4a" stroke-width="3" />
+<polygon points="305.00,258.83 417.04,355.31 418.13,485.31 305.00,459.66 157.43,505.20 154.45,333.08" fill="#0f766e33" stroke="#0f766e" stroke-width="3" />
+<rect x="630" y="170" width="22" height="22" fill="#c96f4a33" stroke="#c96f4a" stroke-width="3" />
+<text x="664" y="186" font-family="Georgia, serif" font-size="17" fill="#111827">Old Haiku Baseline</text>
+<rect x="630" y="206" width="22" height="22" fill="#0f766e33" stroke="#0f766e" stroke-width="3" />
+<text x="664" y="222" font-family="Georgia, serif" font-size="17" fill="#111827">Current Localhost Model</text>
+</svg>
